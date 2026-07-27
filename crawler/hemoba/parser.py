@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from httpx import Response
 
 
 class Parser:
@@ -8,7 +7,7 @@ class Parser:
 
         return {
             "name": self.define_name(),
-            "bloods": self.compose_rhs(soup),
+            "bloods": self.compose_rh(soup),
         }
 
     def define_name(self):
@@ -17,7 +16,7 @@ class Parser:
     def compose_bloods(self, soup):
         return [self.rh_a_positive(soup)]
 
-    def compose_rhs(self, html):
+    def compose_rh(self, html):
         div_html = html.find(
             id="block-bagov-base-views-block-view-card-card-estatistico-sup-critico"
         )
