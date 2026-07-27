@@ -17,13 +17,11 @@ class Parser:
         return [self.rh_a_positive(soup)]
 
     def compose_rh(self, html):
-        div_html = html.find(
-            id="block-bagov-base-views-block-view-card-card-estatistico-sup-critico"
-        )
+        div_html = html.find(id=self.bloods_container_selector_id())
         bloods = div_html.find_all(
-            "div",
-            class_="p-0 p-lg-1 p-md-1 card-footer w-100 border-0 text-center text-uppercase",
+            "div", class_=self.blood_informations_container_selector()
         )
+
         return [
             {
                 "name": blood.h1.text.strip(),
@@ -31,3 +29,9 @@ class Parser:
             }
             for blood in bloods
         ]
+
+    def bloods_container_selector_id(self):
+        return "block-bagov-base-views-block-view-card-card-estatistico-sup-critico"
+
+    def blood_informations_container_selector(self):
+        return "p-0 p-lg-1 p-md-1 card-footer w-100 border-0 text-center text-uppercase"
