@@ -8,6 +8,7 @@ class Parser:
         return {
             "name": self.define_name(),
             "bloods": self.compose_rh(soup),
+            "last_release": self.get_blood_last_release(soup)
         }
 
     def define_name(self):
@@ -17,21 +18,24 @@ class Parser:
         return [self.rh_a_positive(soup)]
 
     def compose_rh(self, html):
-        div_html = html.find(id=self.bloods_container_selector_id())
-        bloods = div_html.find_all(
-            "div", class_=self.blood_informations_container_selector()
-        )
+        bloods_html = self.fetch_bloods(html)
+        blod_informations = self.fetch_blood_informations(bloods_html)
 
         return [
             {
                 "name": blood.h1.text.strip(),
                 "level": blood.p.text.strip(),
             }
-            for blood in bloods
+            for blood in blod_informations
         ]
 
-    def bloods_container_selector_id(self):
-        return "block-bagov-base-views-block-view-card-card-estatistico-sup-critico"
+    def fetch_bloods(self, html):
+        return html.find(id="block-bagov-base-views-block-view-card-card-estatistico-sup-critico")
 
-    def blood_informations_container_selector(self):
-        return "p-0 p-lg-1 p-md-1 card-footer w-100 border-0 text-center text-uppercase"
+    def fetch_blood_informations(self, html):
+        html_selector = "p-0 p-lg-1 p-md-1 card-footer w-100 border-0 text-center text-uppercase"
+
+        return html.find_all("div", class_=html_selector)
+
+    def get_blood_last_release(self, html):
+        return html.find('time')['datetime']

@@ -9,6 +9,7 @@ def test_get_a_positive_test(mock_get, hemoba_html):
 
     assert crawler is not None
     assert crawler["name"] == "Hemoba"
+    assert crawler["last_release"] == "2026-07-27T09:35:31-03:00"
     assert crawler["bloods"] == [
         {"name": "A+", "level": "Alerta"},
         {"name": "A-", "level": "Alerta"},
