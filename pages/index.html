@@ -26,9 +26,9 @@
           Seu sangue pode salvar vidas hoje.
         </h1>
         <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
-          O Hemoba está precisando de doadores para alguns tipos sanguíneos.
-          A doação é simples, rápida e faz diferença para pacientes que aguardam por tratamento.
+          Monitore o estoque de sangue da HEMOBA e receba alertas sobre campanhas e necessidades urgentes na Bahia.
         </p>
+        <p class="mt-3 text-sm text-slate-400">Última atualização: 30 de julho de 2026</p>
         <a class="mt-6 inline-block rounded-full bg-gradient-to-r from-red-600 to-red-500 px-5 py-3 font-semibold text-white transition hover:translate-y-[-2px]"
           href="#tipos">
           Ver tipos sanguíneos
@@ -103,11 +103,95 @@
       </article>
     </section>
 
-    <section class="mt-8 rounded-2xl border border-white/10 bg-white/5 p-6 text-center text-slate-300">
-      <p>
-        Doe sangue, ajude o Hemoba e contribua para salvar vidas.
-        Cada doação pode transformar a rotina de pacientes e famílias.
-      </p>
+    <section
+      class="mt-8 rounded-[28px] border border-red-500/20 bg-gradient-to-br from-[#120606] to-[#060606] p-6 shadow-2xl shadow-black/30 sm:p-8">
+      <div class="mb-6 text-center">
+        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-red-400">Cadastro de doador</p>
+        <h2 class="mt-2 text-3xl font-semibold text-white">Seja parte dessa rede de apoio</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-300 sm:text-base">
+          Cadastre-se para receber avisos importantes sobre campanhas e necessidade de doadores no Hemoba.
+        </p>
+      </div>
+
+      <form class="grid gap-4 md:grid-cols-2">
+        <div>
+          <label for="nome" class="mb-2 block text-sm font-medium text-slate-200">Nome</label>
+          <input id="nome" name="nome" type="text" required
+            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-red-500"
+            placeholder="Seu nome completo" />
+        </div>
+
+        <div>
+          <label for="email" class="mb-2 block text-sm font-medium text-slate-200">E-mail</label>
+          <input id="email" name="email" type="email" required
+            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-red-500"
+            placeholder="seu@email.com" />
+        </div>
+
+        <div>
+          <label for="celular" class="mb-2 block text-sm font-medium text-slate-200">Celular</label>
+          <input id="celular" name="celular" type="tel" required
+            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-red-500"
+            placeholder="(11) 99999-9999" />
+        </div>
+
+        <div>
+          <label for="cidade" class="mb-2 block text-sm font-medium text-slate-200">Cidade</label>
+          <input id="cidade" name="cidade" type="text" required
+            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-red-500"
+            placeholder="Sua cidade" />
+        </div>
+
+        <div>
+          <label for="estado" class="mb-2 block text-sm font-medium text-slate-200">Estado</label>
+          <input id="estado" name="estado" type="text" required
+            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-red-500"
+            placeholder="BA" />
+        </div>
+
+        <div>
+          <label for="tipo_sanguineo" class="mb-2 block text-sm font-medium text-slate-200">Tipo sanguíneo</label>
+          <select id="tipo_sanguineo" name="tipo_sanguineo"
+            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none focus:border-red-500">
+            <option value="">Não sei / Prefiro não informar</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="rh" class="mb-2 block text-sm font-medium text-slate-200">Fator Rh</label>
+          <select id="rh" name="rh"
+            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none focus:border-red-500">
+            <option value="">Não sei / Prefiro não informar</option>
+            <option value="Positivo">Positivo</option>
+            <option value="Negativo">Negativo</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-black/30 px-4 py-3 md:col-span-2">
+          <input id="notificacoes" name="notificacoes" type="checkbox"
+            class="h-4 w-4 rounded border-white/20 bg-black text-red-600 focus:ring-red-500" />
+          <label for="notificacoes" class="text-sm text-slate-200">
+            Autorizo o SangueJá a utilizar meu e-mail, cidade e tipo sanguíneo informado para enviar alertas
+            relacionados à necessidade de doação na minha região. Posso
+            cancelar a qualquer momento.
+          </label>
+        </div>
+
+        <div class="md:col-span-2">
+          <button type="submit"
+            class="w-full rounded-full bg-gradient-to-r from-red-600 to-red-500 px-5 py-3 font-semibold text-white transition hover:translate-y-[-2px]">
+            Cadastrar
+          </button>
+        </div>
+      </form>
     </section>
   </main>
 </body>
