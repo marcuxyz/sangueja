@@ -4,112 +4,324 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hemoba | Tipos Sanguíneos</title>
+  <title>SangueJá | Status de hemocentros</title>
   <meta name="description"
-    content="Landing page com informações sobre tipos sanguíneos e a necessidade de doadores no Hemoba." />
+    content="Landing page com o status de sangue de vários hemocentros e alertas para doação em toda a rede." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="min-h-screen bg-[#050505] text-white" style="font-family: 'Inter', sans-serif;">
-  <main class="mx-auto flex max-w-7xl flex-col px-4 py-8 sm:px-6 lg:px-8">
+<body class="min-h-screen bg-[#040404] text-white">
+  <div class="pointer-events-none absolute inset-0 overflow-hidden">
+    <div class="hero-glow hero-glow--one"></div>
+    <div class="hero-glow hero-glow--two"></div>
+  </div>
+
+  <main class="relative mx-auto flex max-w-7xl flex-col px-4 py-5 sm:px-6 lg:px-8 lg:py-8">
+    <header
+      class="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-3 backdrop-blur">
+      <div class="flex items-center gap-2 text-sm font-medium text-slate-200">
+        <span class="inline-flex h-2.5 w-2.5 rounded-full bg-red-500"></span>
+        Rede SangueJá
+      </div>
+      <div class="rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-sm text-red-300">
+        atualização a cada 30 minutos
+      </div>
+    </header>
+
     <section
-      class="grid items-center gap-8 rounded-[32px] border border-white/10 bg-gradient-to-br from-[#0b0b0b] via-[#1a0505] to-[#050505] p-8 shadow-2xl shadow-black/40 lg:grid-cols-[1.4fr_0.8fr] lg:p-10">
+      class="grid items-center gap-6 rounded-[36px] border border-white/10 bg-gradient-to-br from-[#0d0d0d] via-[#180707] to-[#050505] p-6 shadow-[0_40px_120px_rgba(0,0,0,0.45)] lg:grid-cols-[1.2fr_0.8fr] lg:p-10">
       <div>
         <p
-          class="inline-block rounded-full border border-red-600/70 px-3 py-1 text-sm font-semibold uppercase tracking-[0.2em] text-red-400">
-          Campanha Hemoba
+          class="inline-flex rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-sm font-semibold uppercase tracking-[0.24em] text-red-300">
+          Rede de hemocentros
         </p>
         <h1 class="mt-4 text-4xl font-bold leading-tight sm:text-5xl">
-          Seu sangue pode salvar vidas hoje.
+          O sangue que salva vidas está espalhado por toda a rede.
         </h1>
         <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
-          Monitore o estoque de sangue da HEMOBA e receba alertas sobre campanhas e necessidades urgentes na Bahia.
+          Acompanhe o estoque e a demanda de vários hemocentros para agir mais rápido quando a necessidade for urgente.
         </p>
-        <p class="mt-3 text-sm text-slate-400">Última atualização: 30 de julho de 2026</p>
-        <a class="mt-6 inline-block rounded-full bg-gradient-to-r from-red-600 to-red-500 px-5 py-3 font-semibold text-white transition hover:translate-y-[-2px]"
-          href="#tipos">
-          Ver tipos sanguíneos
-        </a>
-      </div>
 
-      <div class="rounded-2xl border border-red-500/20 bg-black/70 p-6 shadow-lg shadow-red-950/20"
-        aria-label="Resumo da campanha">
-        <div class="mb-3 inline-block rounded-full bg-red-500/10 px-3 py-1 text-sm font-semibold text-red-400">
-          Necessidade urgente
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a class="inline-flex rounded-full bg-gradient-to-r from-red-600 to-red-500 px-5 py-3 font-semibold text-white transition hover:-translate-y-1"
+            href="#status">
+            Ver status da rede
+          </a>
+          <a class="inline-flex rounded-full border border-white/10 bg-white/5 px-5 py-3 font-semibold text-slate-100 transition hover:border-red-400/40 hover:bg-white/10"
+            href="#cadastro">
+            Quero me cadastrar
+          </a>
         </div>
-        <h2 class="text-5xl font-bold text-white">O-</h2>
-        <p class="mt-2 text-sm leading-6 text-slate-300">
-          É o tipo mais requisitado em situações de emergência.
-        </p>
+
+        <div class="mt-6 grid gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+            <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Hemocentros ativos</p>
+            <p class="mt-2 text-2xl font-semibold text-white">12</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+            <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Prioridade alta</p>
+            <p class="mt-2 text-2xl font-semibold text-white">6</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+            <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Última atualização</p>
+            <p class="mt-2 text-2xl font-semibold text-white">09:40</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-[28px] border border-red-500/20 bg-black/65 p-5 shadow-lg shadow-red-950/20">
+        <div class="flex items-center justify-between">
+          <p class="text-sm font-semibold uppercase tracking-[0.25em] text-red-300">Hoje na rede</p>
+          <span
+            class="rounded-full border border-red-500/20 bg-red-500/10 px-2.5 py-1 text-xs font-semibold text-red-300">
+            Urgente
+          </span>
+        </div>
+
+        <div class="mt-4 space-y-3">
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-white">O-</span>
+              <span class="text-sm text-slate-400">4 centros</span>
+            </div>
+            <p class="mt-2 text-sm leading-6 text-slate-300">Tipo mais procurado em emergências e com estoque reduzido.
+            </p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-white">A-</span>
+              <span class="text-sm text-slate-400">3 centros</span>
+            </div>
+            <p class="mt-2 text-sm leading-6 text-slate-300">A demanda segue alta em regiões de maior complexidade
+              clínica.</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-white">B+</span>
+              <span class="text-sm text-slate-400">2 centros</span>
+            </div>
+            <p class="mt-2 text-sm leading-6 text-slate-300">Necessita de reforço em campanhas locais e compartilhadas.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section id="tipos" class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4" aria-label="Tipos sanguíneos">
-      <article class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
-        <div class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-red-400">Urgente</div>
-        <h3 class="text-2xl font-semibold text-white">O-</h3>
-        <p class="mt-2 text-sm leading-6 text-slate-300">Receptor universal para sangue vermelho e muito procurado em
-          emergências.</p>
-      </article>
+    <section id="status" class="mt-8">
+      <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-[0.24em] text-red-300">Status por hemocentro</p>
+          <h2 class="mt-1 text-2xl font-semibold text-white">Onde a necessidade está mais alta</h2>
+        </div>
+        <p class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-slate-300">
+          Dados organizados por rede e região
+        </p>
+      </div>
 
-      <article class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
-        <div class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-red-400">Alta demanda</div>
-        <h3 class="text-2xl font-semibold text-white">O+</h3>
-        <p class="mt-2 text-sm leading-6 text-slate-300">Um dos tipos mais comuns e sempre necessário nas unidades de
-          atendimento.</p>
-      </article>
+      <div class="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+        <article class="card-hover rounded-[24px] border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.2em] text-red-300">Hemoba</p>
+              <h3 class="mt-1 text-xl font-semibold text-white">Salvador</h3>
+            </div>
+            <span
+              class="rounded-full border border-red-500/20 bg-red-500/10 px-2.5 py-1 text-xs font-semibold text-red-300">Urgente</span>
+          </div>
+          <p class="mt-3 text-sm leading-6 text-slate-300">Estoque abaixo do ideal para O− e A− em atendimento de
+            emergência.</p>
+          <div class="mt-4 grid grid-cols-3 gap-2">
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">O−</p>
+              <p class="mt-1 text-lg font-semibold text-white">2</p>
+            </div>
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">A−</p>
+              <p class="mt-1 text-lg font-semibold text-white">4</p>
+            </div>
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">B+</p>
+              <p class="mt-1 text-lg font-semibold text-white">5</p>
+            </div>
+          </div>
+        </article>
 
-      <article class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
-        <div class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-red-400">Em destaque</div>
-        <h3 class="text-2xl font-semibold text-white">A-</h3>
-        <p class="mt-2 text-sm leading-6 text-slate-300">Importante para pacientes com compatibilidade restrita.</p>
-      </article>
+        <article class="card-hover rounded-[24px] border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.2em] text-red-300">Hemocentro</p>
+              <h3 class="mt-1 text-xl font-semibold text-white">Feira de Santana</h3>
+            </div>
+            <span
+              class="rounded-full border border-amber-500/20 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-300">Alta
+              demanda</span>
+          </div>
+          <p class="mt-3 text-sm leading-6 text-slate-300">Atendimento reforçado para O+ e A+ durante campanhas locais.
+          </p>
+          <div class="mt-4 grid grid-cols-3 gap-2">
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">O+</p>
+              <p class="mt-1 text-lg font-semibold text-white">6</p>
+            </div>
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">A+</p>
+              <p class="mt-1 text-lg font-semibold text-white">7</p>
+            </div>
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">AB+</p>
+              <p class="mt-1 text-lg font-semibold text-white">3</p>
+            </div>
+          </div>
+        </article>
 
-      <article class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
-        <div class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-red-400">Em destaque</div>
-        <h3 class="text-2xl font-semibold text-white">A+</h3>
-        <p class="mt-2 text-sm leading-6 text-slate-300">Amplamente utilizado em transfusões e com alta recorrência de
-          demanda.</p>
-      </article>
+        <article class="card-hover rounded-[24px] border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.2em] text-red-300">Hemocentro</p>
+              <h3 class="mt-1 text-xl font-semibold text-white">Vitória da Conquista</h3>
+            </div>
+            <span
+              class="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-300">Estável</span>
+          </div>
+          <p class="mt-3 text-sm leading-6 text-slate-300">Reservas saudáveis para a maioria dos grupos, com reforço
+            contínuo.</p>
+          <div class="mt-4 grid grid-cols-3 gap-2">
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">A+</p>
+              <p class="mt-1 text-lg font-semibold text-white">9</p>
+            </div>
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">B+</p>
+              <p class="mt-1 text-lg font-semibold text-white">6</p>
+            </div>
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">O+</p>
+              <p class="mt-1 text-lg font-semibold text-white">8</p>
+            </div>
+          </div>
+        </article>
 
-      <article class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
-        <div class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-red-400">Necessidade</div>
-        <h3 class="text-2xl font-semibold text-white">B-</h3>
-        <p class="mt-2 text-sm leading-6 text-slate-300">Requer doação regular para manter estoques adequados.</p>
-      </article>
+        <article class="card-hover rounded-[24px] border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.2em] text-red-300">Hemocentro</p>
+              <h3 class="mt-1 text-xl font-semibold text-white">Ilhéus</h3>
+            </div>
+            <span
+              class="rounded-full border border-red-500/20 bg-red-500/10 px-2.5 py-1 text-xs font-semibold text-red-300">Urgente</span>
+          </div>
+          <p class="mt-3 text-sm leading-6 text-slate-300">Aumento na procura por O− devido a movimento recente de
+            internações.</p>
+          <div class="mt-4 grid grid-cols-3 gap-2">
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">O−</p>
+              <p class="mt-1 text-lg font-semibold text-white">1</p>
+            </div>
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">A−</p>
+              <p class="mt-1 text-lg font-semibold text-white">3</p>
+            </div>
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">AB−</p>
+              <p class="mt-1 text-lg font-semibold text-white">2</p>
+            </div>
+          </div>
+        </article>
 
-      <article class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
-        <div class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-red-400">Necessidade</div>
-        <h3 class="text-2xl font-semibold text-white">B+</h3>
-        <p class="mt-2 text-sm leading-6 text-slate-300">Tipo muito solicitado em hospitais e centros de atendimento.
+        <article class="card-hover rounded-[24px] border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.2em] text-red-300">Hemocentro</p>
+              <h3 class="mt-1 text-xl font-semibold text-white">Jequié</h3>
+            </div>
+            <span
+              class="rounded-full border border-amber-500/20 bg-amber-500/10 px-2.5 py-1 text-xs font-semibold text-amber-300">Alta
+              demanda</span>
+          </div>
+          <p class="mt-3 text-sm leading-6 text-slate-300">Campanhas regionais ajudam a manter o abastecimento mais
+            regular.</p>
+          <div class="mt-4 grid grid-cols-3 gap-2">
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">O+</p>
+              <p class="mt-1 text-lg font-semibold text-white">5</p>
+            </div>
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">A+</p>
+              <p class="mt-1 text-lg font-semibold text-white">4</p>
+            </div>
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">B+</p>
+              <p class="mt-1 text-lg font-semibold text-white">3</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="card-hover rounded-[24px] border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="text-sm font-semibold uppercase tracking-[0.2em] text-red-300">Hemocentro</p>
+              <h3 class="mt-1 text-xl font-semibold text-white">Barreiras</h3>
+            </div>
+            <span
+              class="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-300">Estável</span>
+          </div>
+          <p class="mt-3 text-sm leading-6 text-slate-300">Atende com bom equilíbrio entre os grupos mais frequentes.
+          </p>
+          <div class="mt-4 grid grid-cols-3 gap-2">
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">O+</p>
+              <p class="mt-1 text-lg font-semibold text-white">7</p>
+            </div>
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">A+</p>
+              <p class="mt-1 text-lg font-semibold text-white">6</p>
+            </div>
+            <div class="rounded-xl bg-black/40 p-3 text-center">
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400">AB+</p>
+              <p class="mt-1 text-lg font-semibold text-white">4</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="mt-8 grid gap-4 lg:grid-cols-4">
+      <article class="rounded-[24px] border border-white/10 bg-gradient-to-br from-[#130606] to-[#080808] p-5">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-red-300">O-</p>
+        <h3 class="mt-2 text-2xl font-semibold text-white">Mais urgente</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-300">Necessita de doações recorrentes para manter o estoque
+          saudável.</p>
+      </article>
+      <article class="rounded-[24px] border border-white/10 bg-gradient-to-br from-[#120707] to-[#080808] p-5">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-red-300">A-</p>
+        <h3 class="mt-2 text-2xl font-semibold text-white">Alta prioridade</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-300">Aparece com frequência em transfusões de pacientes críticos.
         </p>
       </article>
-
-      <article class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
-        <div class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-red-400">Importante</div>
-        <h3 class="text-2xl font-semibold text-white">AB-</h3>
-        <p class="mt-2 text-sm leading-6 text-slate-300">Compatível com poucos grupos, o que torna a reserva essencial.
-        </p>
+      <article class="rounded-[24px] border border-white/10 bg-gradient-to-br from-[#120707] to-[#080808] p-5">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-red-300">B+</p>
+        <h3 class="mt-2 text-2xl font-semibold text-white">Campanha ativa</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-300">Frequente em hospitais e unidades médicas da rede.</p>
       </article>
-
-      <article class="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-sm shadow-black/20">
-        <div class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-red-400">Importante</div>
-        <h3 class="text-2xl font-semibold text-white">AB+</h3>
-        <p class="mt-2 text-sm leading-6 text-slate-300">Receptor universal de plaquetas e hemácias, com demanda
-          constante.</p>
+      <article class="rounded-[24px] border border-white/10 bg-gradient-to-br from-[#120707] to-[#080808] p-5">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-red-300">AB+</p>
+        <h3 class="mt-2 text-2xl font-semibold text-white">Reserva essencial</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-300">Importante para bancos com demanda constante e compatibilidade
+          ampla.</p>
       </article>
     </section>
 
-    <section
-      class="mt-8 rounded-[28px] border border-red-500/20 bg-gradient-to-br from-[#120606] to-[#060606] p-6 shadow-2xl shadow-black/30 sm:p-8">
+    <section id="cadastro"
+      class="mt-8 rounded-[28px] border border-red-500/20 bg-gradient-to-br from-[#140707] to-[#060606] p-6 shadow-2xl shadow-black/30 sm:p-8">
       <div class="mb-6 text-center">
-        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-red-400">Cadastro de doador</p>
+        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-red-300">Cadastro de doador</p>
         <h2 class="mt-2 text-3xl font-semibold text-white">Seja parte dessa rede de apoio</h2>
         <p class="mt-2 text-sm leading-6 text-slate-300 sm:text-base">
-          Cadastre-se para receber avisos importantes sobre campanhas e necessidade de doadores no Hemoba.
+          Cadastre-se para receber alertas de campanhas e necessidades específicas em diferentes hemocentros.
         </p>
       </div>
 
@@ -117,35 +329,35 @@
         <div>
           <label for="nome" class="mb-2 block text-sm font-medium text-slate-200">Nome</label>
           <input id="nome" name="nome" type="text" required
-            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-red-500"
+            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-red-500"
             placeholder="Seu nome completo" />
         </div>
 
         <div>
           <label for="email" class="mb-2 block text-sm font-medium text-slate-200">E-mail</label>
           <input id="email" name="email" type="email" required
-            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-red-500"
+            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-red-500"
             placeholder="seu@email.com" />
         </div>
 
         <div>
           <label for="celular" class="mb-2 block text-sm font-medium text-slate-200">Celular</label>
           <input id="celular" name="celular" type="tel" required
-            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-red-500"
+            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-red-500"
             placeholder="(11) 99999-9999" />
         </div>
 
         <div>
           <label for="cidade" class="mb-2 block text-sm font-medium text-slate-200">Cidade</label>
           <input id="cidade" name="cidade" type="text" required
-            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-red-500"
+            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-red-500"
             placeholder="Sua cidade" />
         </div>
 
         <div>
           <label for="estado" class="mb-2 block text-sm font-medium text-slate-200">Estado</label>
           <input id="estado" name="estado" type="text" required
-            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none ring-0 placeholder:text-slate-500 focus:border-red-500"
+            class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-red-500"
             placeholder="BA" />
         </div>
 
@@ -180,14 +392,13 @@
             class="h-4 w-4 rounded border-white/20 bg-black text-red-600 focus:ring-red-500" />
           <label for="notificacoes" class="text-sm text-slate-200">
             Autorizo o SangueJá a utilizar meu e-mail, cidade e tipo sanguíneo informado para enviar alertas
-            relacionados à necessidade de doação na minha região. Posso
-            cancelar a qualquer momento.
+            relacionados à necessidade de doação na minha região.
           </label>
         </div>
 
         <div class="md:col-span-2">
           <button type="submit"
-            class="w-full rounded-full bg-gradient-to-r from-red-600 to-red-500 px-5 py-3 font-semibold text-white transition hover:translate-y-[-2px]">
+            class="w-full rounded-full bg-gradient-to-r from-red-600 to-red-500 px-5 py-3 font-semibold text-white transition hover:-translate-y-1">
             Cadastrar
           </button>
         </div>
