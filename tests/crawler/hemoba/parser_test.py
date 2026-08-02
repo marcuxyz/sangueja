@@ -1,7 +1,7 @@
 from unittest.mock import patch
 from bs4 import BeautifulSoup
 
-from crawler.hemoba.parser import Parser
+from app.crawlers.hemoba.parser import Parser
 
 
 def test_compose_bloods(hemoba_html):
@@ -29,7 +29,7 @@ def test_define_name():
     assert parser.define_name() == "Hemoba"
 
 
-@patch("crawler.hemoba.parser.Parser.parse")
+@patch("app.crawlers.hemoba.parser.Parser.parse")
 def test_get_blood_updated_date(parser_mock, hemoba_html):
     parser_mock.return_value = hemoba_html
     parser = Parser()

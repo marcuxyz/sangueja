@@ -1,8 +1,8 @@
 from unittest.mock import patch
-from crawler.hemoba.crawler import Crawler
+from app.crawlers.hemoba.crawler import Crawler
 
 
-@patch("crawler.hemoba.crawler.Client.get")
+@patch("app.crawlers.hemoba.crawler.Client.get")
 def test_get_a_positive_test(mock_get, hemoba_html):
     mock_get.return_value = hemoba_html
     crawler = Crawler.perform()

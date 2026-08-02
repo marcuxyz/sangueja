@@ -2,8 +2,8 @@ import os
 
 from httpx import Client
 
-from crawler.base import Base
-from crawler.hemoba.parser import Parser
+from app.crawlers.base import Base
+from app.crawlers.hemoba.parser import Parser
 
 DEFAULT_URL = os.getenv("HEMOBA_SOURCE_URL")
 
