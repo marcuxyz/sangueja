@@ -8,7 +8,7 @@ class Parser:
         return {
             "name": self.define_name(),
             "bloods": self.compose_rh(parserd_html),
-            "last_release": self.get_blood_last_release(parserd_html),
+            "updated_date": self.get_blood_updated_date(parserd_html),
         }
 
     def define_name(self):
@@ -39,5 +39,5 @@ class Parser:
 
         return html.find_all("div", class_=html_selector)
 
-    def get_blood_last_release(self, html):
+    def get_blood_updated_date(self, html):
         return html.find("time")["datetime"]

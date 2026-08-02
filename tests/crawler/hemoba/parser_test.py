@@ -30,13 +30,13 @@ def test_define_name():
 
 
 @patch("crawler.hemoba.parser.Parser.parse")
-def test_get_blood_last_release(parser_mock, hemoba_html):
+def test_get_blood_updated_date(parser_mock, hemoba_html):
     parser_mock.return_value = hemoba_html
     parser = Parser()
     parser_html = BeautifulSoup(hemoba_html, "html.parser")
 
     assert parser is not None
-    assert parser.get_blood_last_release(parser_html) == "2026-07-27T09:35:31-03:00"
+    assert parser.get_blood_updated_date(parser_html) == "2026-07-27T09:35:31-03:00"
 
 
 def test_fetch_bloods(hemoba_html):
