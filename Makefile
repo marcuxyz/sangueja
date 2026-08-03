@@ -8,4 +8,4 @@ format:
 
 .PHONY: check
 check:
-	uv run black -l 89 --check crawler tests
+	uv run black -l 89 --check tests app
