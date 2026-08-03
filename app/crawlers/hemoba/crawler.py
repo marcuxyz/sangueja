@@ -1,16 +1,16 @@
 import os
 
-from httpx import Client
-
-from app.crawlers.base import Base
+from app.crawlers.crawler_base import CrawlerBase
 from app.crawlers.hemoba.parser import Parser
 
-DEFAULT_URL = os.getenv("HEMOBA_SOURCE_URL")
 
+class Crawler(CrawlerBase):
+    def __init__(self):
+        super().__init__()
 
-class Crawler(Base):
-    @staticmethod
-    def perform():
-        response = Client.get(DEFAULT_URL)
+    def parse(self):
         parser = Parser()
-        return parser.parse(response)
+        return parser.parse(self.response_text)
+
+    def default_url(self):
+        return os.getenv("HEMOBA_SOURCE_URL")

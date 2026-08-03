@@ -1,16 +1,27 @@
 from unittest.mock import patch
+
+from app.crawlers.crawler_base import CrawlerBase
 from app.crawlers.hemoba.crawler import Crawler
 
 
-@patch("app.crawlers.hemoba.crawler.Client.get")
-def test_get_a_positive_test(mock_get, hemoba_html):
-    mock_get.return_value = hemoba_html
-    crawler = Crawler.perform()
+@patch.object(CrawlerBase, "perform", return_value="base")
+def test_base_perform_is_called_during_initialization(mock_perform):
+    crawler = Crawler()
 
     assert crawler is not None
-    assert crawler["name"] == "Hemoba"
-    assert crawler["updated_date"] == "2026-07-27T09:35:31-03:00"
-    assert crawler["bloods"] == [
+    mock_perform.assert_called_once()
+
+
+@patch("app.crawlers.crawler_base.HttpClient.download_html")
+def test_get_a_positive_test(download_html, hemoba_html):
+    download_html.return_value.text = hemoba_html
+    crawler = Crawler()
+    crawler_parse = crawler.parse()
+
+    assert crawler.response_text is not None
+    assert crawler_parse["name"] == "Hemoba"
+    assert crawler_parse["updated_date"] == "2026-07-27T09:35:31-03:00"
+    assert crawler_parse["bloods"] == [
         {"name": "A+", "level": "Alerta"},
         {"name": "A-", "level": "Alerta"},
         {"name": "B+", "level": "Alerta"},
