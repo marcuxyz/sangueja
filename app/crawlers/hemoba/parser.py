@@ -21,7 +21,7 @@ class Parser:
         informations = [
             {
                 "name": blood.h1.text.strip(),
-                "level": blood.p.text.strip(),
+                "status": blood.p.text.strip(),
             }
             for blood in blod_informations
         ]
