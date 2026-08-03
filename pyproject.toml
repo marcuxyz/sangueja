@@ -9,6 +9,7 @@ dependencies = [
     "httpx>=0.28.1",
     "playwright>=1.61.0",
     "selectolax>=0.4.11",
+    "sqlalchemy>=2.0.51",
 ]
 
 [dependency-groups]
