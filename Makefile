@@ -4,7 +4,7 @@ test:
 
 .PHONY: format
 format:
-	uv run black -l 89 tests crawler
+	uv run black -l 89 tests app
 
 .PHONY: check
 check:
