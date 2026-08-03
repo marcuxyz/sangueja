@@ -11,14 +11,14 @@ def test_compose_bloods(hemoba_html):
 
     assert compose_bloods is not None
     assert compose_bloods == [
-        {"name": "A+", "level": "Alerta"},
-        {"name": "A-", "level": "Alerta"},
-        {"name": "B+", "level": "Alerta"},
-        {"name": "B-", "level": "Crítico"},
-        {"name": "AB+", "level": "Estável"},
-        {"name": "AB-", "level": "Estável"},
-        {"name": "O+", "level": "Crítico"},
-        {"name": "O-", "level": "Crítico"},
+        {"name": "A+", "status": "Alerta"},
+        {"name": "A-", "status": "Alerta"},
+        {"name": "B+", "status": "Alerta"},
+        {"name": "B-", "status": "Crítico"},
+        {"name": "AB+", "status": "Estável"},
+        {"name": "AB-", "status": "Estável"},
+        {"name": "O+", "status": "Crítico"},
+        {"name": "O-", "status": "Crítico"},
     ]
 
 

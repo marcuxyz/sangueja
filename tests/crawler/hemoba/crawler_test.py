@@ -22,12 +22,12 @@ def test_get_a_positive_test(download_html, hemoba_html):
     assert crawler_parse["name"] == "Hemoba"
     assert crawler_parse["updated_date"] == "2026-07-27T09:35:31-03:00"
     assert crawler_parse["bloods"] == [
-        {"name": "A+", "level": "Alerta"},
-        {"name": "A-", "level": "Alerta"},
-        {"name": "B+", "level": "Alerta"},
-        {"name": "B-", "level": "Crítico"},
-        {"name": "AB+", "level": "Estável"},
-        {"name": "AB-", "level": "Estável"},
-        {"name": "O+", "level": "Crítico"},
-        {"name": "O-", "level": "Crítico"},
+        {"name": "A+", "status": "Alerta"},
+        {"name": "A-", "status": "Alerta"},
+        {"name": "B+", "status": "Alerta"},
+        {"name": "B-", "status": "Crítico"},
+        {"name": "AB+", "status": "Estável"},
+        {"name": "AB-", "status": "Estável"},
+        {"name": "O+", "status": "Crítico"},
+        {"name": "O-", "status": "Crítico"},
     ]
