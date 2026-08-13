@@ -17,17 +17,17 @@ class CrawlerBase(ABC):
     def perform(self):
         return self.parse(self.document())
 
-    def save(self, data: dict) -> bool:
-        """Inserts a new blood center into the database.
-        Args:
-            name (str): The name of the blood center.
-            city (str): The city where the blood center is located.
-            state (str): The state abbreviation (automatically converted to uppercase).
+def save(self, data: dict, db_url: str = "sqlite:///databases/test.sqlite") -> bool:
+    """Inserts a new blood center into the database.
 
-        Returns:
-            bool: True if the insertion was successful, False otherwise.
-        """
-        engine = create_engine("sqlite:///databases/test.sqlite")
+    Args:
+        data (dict): Payload containing "blood_center", "city", and "state".
+        db_url (str): SQLAlchemy database URL. Defaults to a local SQLite file.
+
+    Returns:
+        bool: True if the insertion was successful, False otherwise.
+    """
+    engine = create_engine(db_url)
         with engine.begin() as conn:
             conn.execute(
                 text("""
