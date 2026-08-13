@@ -2,17 +2,11 @@ from bs4 import BeautifulSoup
 
 
 class Parser:
-    def parse(self, raw_html: str):
-        parserd_html = BeautifulSoup(raw_html, "html.parser")
-
+    def parse(self, document: BeautifulSoup):
         return {
-            "name": self.define_name(),
-            "bloods": self.compose_rh(parserd_html),
-            "updated_date": self.get_blood_updated_date(parserd_html),
+            "bloods": self.compose_rh(document),
+            "collected_at": self.get_blood_collected_at(document),
         }
-
-    def define_name(self):
-        return "Hemoba"
 
     def compose_rh(self, html):
         bloods_html = self.fetch_bloods(html)
@@ -39,5 +33,5 @@ class Parser:
 
         return html.find_all("div", class_=html_selector)
 
-    def get_blood_updated_date(self, html):
+    def get_blood_collected_at(self, html):
         return html.find("time")["datetime"]

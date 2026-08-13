@@ -4,7 +4,14 @@ from app.crawlers.crawler_base import CrawlerBase
 from app.crawlers.hemoba.crawler import Crawler
 
 
-@patch.object(CrawlerBase, "perform", return_value="base")
+def test_autostart_false_does_not_populate_data():
+    crawler = Crawler(autostart=False)
+
+    assert crawler is not None
+    assert crawler.data is None
+
+
+@patch.object(CrawlerBase, "perform", return_value={"name": "Hemoba"})
 def test_base_perform_is_called_during_initialization(mock_perform):
     crawler = Crawler()
 
@@ -16,12 +23,11 @@ def test_base_perform_is_called_during_initialization(mock_perform):
 def test_get_a_positive_test(download_html, hemoba_html):
     download_html.return_value.text = hemoba_html
     crawler = Crawler()
-    crawler_parse = crawler.parse()
 
-    assert crawler.response_text is not None
-    assert crawler_parse["name"] == "Hemoba"
-    assert crawler_parse["updated_date"] == "2026-07-27T09:35:31-03:00"
-    assert crawler_parse["bloods"] == [
+    assert crawler.data is not None
+    assert crawler.data["blood_center"] == "Hemoba"
+    assert crawler.data["collected_at"] == "2026-07-27T09:35:31-03:00"
+    assert crawler.data["bloods"] == [
         {"name": "A+", "status": "Alerta"},
         {"name": "A-", "status": "Alerta"},
         {"name": "B+", "status": "Alerta"},

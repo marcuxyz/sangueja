@@ -5,12 +5,14 @@ from app.crawlers.hemoba.parser import Parser
 
 
 class Crawler(CrawlerBase):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, autostart: bool = True):
+        super().__init__(autostart=autostart)
 
-    def parse(self):
-        parser = Parser()
-        return parser.parse(self.response_text)
+    def parser_class(self):
+        return Parser()
 
-    def default_url(self):
+    def target_url(self):
         return os.getenv("HEMOBA_SOURCE_URL")
+
+    def blood_center(self):
+        return {"blood_center": "Hemoba", "city": "Salvador", "state": "BA"}
