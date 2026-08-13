@@ -4,7 +4,7 @@ from app.crawlers.crawler_base import CrawlerBase
 from app.crawlers.hemoba.crawler import Crawler
 
 
-def test_base_perform_can_be_called_explicitly():
+def test_autostart_false_does_not_populate_data():
     crawler = Crawler(autostart=False)
 
     assert crawler is not None
