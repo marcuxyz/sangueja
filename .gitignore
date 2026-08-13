@@ -11,3 +11,6 @@ wheels/
 .vscode/
 .env
 .DS_Store
+*.sqlite
+*.sqlite3
+*.db

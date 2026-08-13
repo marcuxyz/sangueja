@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 
 
 class Parser:
-    def parse(self, document: str):
+    def parse(self, document: BeautifulSoup):
         return {
             "bloods": self.compose_rh(document),
             "collected_at": self.get_blood_collected_at(document),
