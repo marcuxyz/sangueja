@@ -17,6 +17,7 @@ class CrawlerBase(ABC):
     def perform(self):
         return self.parse(self.document())
 
+
 def save(self, data: dict, db_url: str = "sqlite:///databases/test.sqlite") -> bool:
     """Inserts a new blood center into the database.
 
@@ -28,18 +29,18 @@ def save(self, data: dict, db_url: str = "sqlite:///databases/test.sqlite") -> b
         bool: True if the insertion was successful, False otherwise.
     """
     engine = create_engine(db_url)
-        with engine.begin() as conn:
-            conn.execute(
-                text("""
-                    INSERT INTO blood_centers (name, city, state)
-                    VALUES (:name, :city, :state)
-                """),
-                {
-                    "name": data["name"],
-                    "city": data["city"],
-                    "state": data["state"],
-                },
-            )
+    with engine.begin() as conn:
+        conn.execute(
+            text("""
+                INSERT INTO blood_centers (name, city, state)
+                VALUES (:name, :city, :state)
+            """),
+            {
+                "name": data["name"],
+                "city": data["city"],
+                "state": data["state"],
+            },
+        )
 
         return True
 
