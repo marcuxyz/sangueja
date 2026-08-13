@@ -62,7 +62,7 @@ class CrawlerBase(ABC):
         return self.blood_center() | self.perform()
 
     def parser_class(self):
-        raise NotImplementedError("#{self.class} must define #parser_class")
+        raise NotImplementedError(f"{self.__class__.__name__} must define parser_class()")
 
     @abstractmethod
     def target_url(self):
