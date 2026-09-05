@@ -17,33 +17,6 @@ class Base(ABC):
     def perform(self):
         return self.parse(self.document())
 
-
-def save(self, data: dict, db_url: str = "sqlite:///databases/test.sqlite") -> bool:
-    """Inserts a new blood center into the database.
-
-    Args:
-        data (dict): Payload containing "blood_center", "city", and "state".
-        db_url (str): SQLAlchemy database URL. Defaults to a local SQLite file.
-
-    Returns:
-        bool: True if the insertion was successful, False otherwise.
-    """
-    engine = create_engine(db_url)
-    with engine.begin() as conn:
-        conn.execute(
-            text("""
-                INSERT INTO blood_centers (name, city, state)
-                VALUES (:name, :city, :state)
-            """),
-            {
-                "name": data["name"],
-                "city": data["city"],
-                "state": data["state"],
-            },
-        )
-
-        return True
-
     def download_page(self):
         client = HttpClient(url=self.target_url())
 

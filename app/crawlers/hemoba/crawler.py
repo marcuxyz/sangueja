@@ -5,7 +5,7 @@ from app.crawlers.hemoba.parser import Parser
 
 
 class Crawler(Base):
-    def __init__(self, autostart: bool = True):
+    def __init__(self, autostart: bool = False):
         super().__init__(autostart=autostart)
 
     def parser_class(self):

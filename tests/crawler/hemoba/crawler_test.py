@@ -13,7 +13,7 @@ def test_autostart_false_does_not_populate_data():
 
 @patch.object(Base, "perform", return_value={"name": "Hemoba"})
 def test_base_perform_is_called_during_initialization(mock_perform):
-    crawler = Crawler()
+    crawler = Crawler(autostart=True)
 
     assert crawler is not None
     mock_perform.assert_called_once()
@@ -22,7 +22,7 @@ def test_base_perform_is_called_during_initialization(mock_perform):
 @patch("app.crawlers.base.HttpClient.download_html")
 def test_get_a_positive_test(download_html, hemoba_html):
     download_html.return_value.text = hemoba_html
-    crawler = Crawler()
+    crawler = Crawler(autostart=True)
 
     assert crawler.data is not None
     assert crawler.data["blood_center"] == "Hemoba"
