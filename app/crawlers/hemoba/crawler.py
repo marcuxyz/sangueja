@@ -8,7 +8,7 @@ class Crawler(Base):
     def __init__(self, autostart: bool = False):
         super().__init__(autostart=autostart)
 
-    def parser_instance(self):
+    def parser(self):
         return Parser()
 
     def target_url(self):
