@@ -12,16 +12,13 @@ class HttpClient:
     def __init__(self, url: str = None):
         self.url = url
 
-
     def client(self):
-        return httpx.Client(
-            timeout=self.timeout()
-        )
+        return httpx.Client(timeout=self.timeout())
 
     def timeout(self):
         return httpx.Timeout(
             timeout=os.getenv("HTTP_TIMEOUT", 30),
-            connect=os.getenv("HTTP_CONNECT_TIMEOUT", 45)
+            connect=os.getenv("HTTP_CONNECT_TIMEOUT", 45),
         )
 
     def download_html(self) -> str:
@@ -37,7 +34,6 @@ class HttpClient:
 
             response = self.client().get(
                 self.url,
-
                 timeout=30,
                 headers={
                     "User-Agent": "SangueJá/1.0 (+https://whatsapp.com/channel/0029VbDs7Jv47XeJnANDSG3l)"

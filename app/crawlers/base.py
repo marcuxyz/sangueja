@@ -23,7 +23,7 @@ class Base(ABC):
         return client.download_html()
 
     def parse(self, docuemnt):
-        parser = self.parser_class()
+        parser = self.parser_instance()
 
         return parser.parse(docuemnt)
 
@@ -35,7 +35,7 @@ class Base(ABC):
     def payload(self):
         return self.blood_center() | self.perform()
 
-    def parser_class(self):
+    def parser_instance(self):
         raise NotImplementedError(
             f"{self.__class__.__name__} must define parser_class()"
         )
