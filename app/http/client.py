@@ -1,5 +1,4 @@
-from httpx import Client
-
+import httpx
 
 class HttpClient:
     """Responsible for connect server with http
@@ -22,6 +21,6 @@ class HttpClient:
             str: The downloaded HTML content.
         """
         try:
-            return Client.get(self.url)
-        except:
-            raise AttributeError("Cannot download HTML from the provided URL")
+            return httpx.get(self.url)
+        except httpx.HTTPError as error:
+            raise RuntimeError("failed to download #{error}") from error
