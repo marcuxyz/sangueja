@@ -1,10 +1,10 @@
 import os
 
-from app.crawlers.crawler_base import CrawlerBase
+from app.crawlers.base import Base
 from app.crawlers.hemoba.parser import Parser
 
 
-class Crawler(CrawlerBase):
+class Crawler(Base):
     def __init__(self, autostart: bool = True):
         super().__init__(autostart=autostart)
 

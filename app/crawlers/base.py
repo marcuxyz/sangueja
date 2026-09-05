@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 from app.http.client import HttpClient
 
 
-class CrawlerBase(ABC):
+class Base(ABC):
     def __init__(self, autostart: bool = True):
         self.data = None
 

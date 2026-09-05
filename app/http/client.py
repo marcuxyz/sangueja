@@ -1,5 +1,6 @@
 import httpx
 
+
 class HttpClient:
     """Responsible for connect server with http
 

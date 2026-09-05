@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from app.crawlers.crawler_base import CrawlerBase
+from app.crawlers.base import Base
 from app.crawlers.hemoba.crawler import Crawler
 
 
@@ -11,7 +11,7 @@ def test_autostart_false_does_not_populate_data():
     assert crawler.data is None
 
 
-@patch.object(CrawlerBase, "perform", return_value={"name": "Hemoba"})
+@patch.object(Base, "perform", return_value={"name": "Hemoba"})
 def test_base_perform_is_called_during_initialization(mock_perform):
     crawler = Crawler()
 
@@ -19,7 +19,7 @@ def test_base_perform_is_called_during_initialization(mock_perform):
     mock_perform.assert_called_once()
 
 
-@patch("app.crawlers.crawler_base.HttpClient.download_html")
+@patch("app.crawlers.base.HttpClient.download_html")
 def test_get_a_positive_test(download_html, hemoba_html):
     download_html.return_value.text = hemoba_html
     crawler = Crawler()
