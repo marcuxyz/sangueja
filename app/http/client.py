@@ -36,12 +36,12 @@ class HttpClient:
                 self.url,
                 timeout=30,
                 headers={
-                    "User-Agent": "SangueJá/1.0 (+https://whatsapp.com/channel/0029VbDs7Jv47XeJnANDSG3l)"
+                    "User-Agent": "SangueJa/1.0 (+https://whatsapp.com/channel/0029VbDs7Jv47XeJnANDSG3l)"
                 },
             )
 
             response.raise_for_status()
 
-            return response.text
+            return response
         except httpx.HTTPError as error:
             raise RuntimeError(f"failed to download #{error}") from error

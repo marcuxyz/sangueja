@@ -15,4 +15,8 @@ class Crawler(Base):
         return os.getenv("HEMOBA_SOURCE_URL")
 
     def blood_center(self):
-        return {"blood_center": "Hemoba", "city": "Salvador", "state": "BA"}
+        return {
+            "blood_center": "Hemoba",
+            "city": "Salvador",
+            "state": "BA",
+        }

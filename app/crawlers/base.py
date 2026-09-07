@@ -11,11 +11,12 @@ class Base(ABC):
     def __init__(self, autostart: bool = True):
         self.data = None
 
-        if autostart:
-            self.data = self.payload()
-
     def perform(self):
-        return self.parse(self.document())
+        parsed_doc = self.parse(self.document())
+
+        self.data = self.blood_center() | parsed_doc
+
+        return self.data
 
     def download_page(self):
         client = HttpClient(url=self.target_url())
@@ -31,9 +32,6 @@ class Base(ABC):
         page = self.download_page()
 
         return BeautifulSoup(page.text, "html.parser")
-
-    def payload(self):
-        return self.blood_center() | self.perform()
 
     def parser(self):
         raise NotImplementedError(
