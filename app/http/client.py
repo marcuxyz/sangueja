@@ -1,4 +1,5 @@
-from httpx import Client
+import os
+import httpx
 
 
 class HttpClient:
@@ -8,9 +9,17 @@ class HttpClient:
         url (str, optional): Pass the URL to connect via HTTP protocol. Defaults to None.
     """
 
-    def __init__(self, url: str = None, method="GET"):
+    def __init__(self, url: str = None):
         self.url = url
-        self.method = method
+
+    def client(self):
+        return httpx.Client(timeout=self.timeout())
+
+    def timeout(self):
+        return httpx.Timeout(
+            timeout=os.getenv("HTTP_TIMEOUT", 30),
+            connect=os.getenv("HTTP_CONNECT_TIMEOUT", 45),
+        )
 
     def download_html(self) -> str:
         """Responsible for download HTML from URL
@@ -22,6 +31,17 @@ class HttpClient:
             str: The downloaded HTML content.
         """
         try:
-            return Client.get(self.url)
-        except:
-            raise AttributeError("Cannot download HTML from the provided URL")
+
+            response = self.client().get(
+                self.url,
+                timeout=30,
+                headers={
+                    "User-Agent": "SangueJa/1.0 (+https://whatsapp.com/channel/0029VbDs7Jv47XeJnANDSG3l)"
+                },
+            )
+
+            response.raise_for_status()
+
+            return response
+        except httpx.HTTPError as error:
+            raise RuntimeError(f"failed to download #{error}") from error

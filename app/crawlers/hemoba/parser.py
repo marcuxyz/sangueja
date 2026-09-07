@@ -4,34 +4,34 @@ from bs4 import BeautifulSoup
 class Parser:
     def parse(self, document: BeautifulSoup):
         return {
-            "bloods": self.compose_rh(document),
-            "collected_at": self.get_blood_collected_at(document),
+            "bloods": self.parse_blood_availability(document),
+            "collected_at": self.extract_collection_timestamp(document),
         }
 
-    def compose_rh(self, html):
-        bloods_html = self.fetch_bloods(html)
-        blod_informations = self.fetch_blood_informations(bloods_html)
+    def parse_blood_availability(self, document):
+        bloods_section = self.find_blood_section(document)
+        blood_cards = self.find_blood_cards(bloods_section)
 
         informations = [
             {
                 "name": blood.h1.text.strip(),
                 "status": blood.p.text.strip(),
             }
-            for blood in blod_informations
+            for blood in blood_cards
         ]
         return informations
 
-    def fetch_bloods(self, html):
-        return html.find(
+    def find_blood_section(self, document):
+        return document.find(
             id="block-bagov-base-views-block-view-card-card-estatistico-sup-critico"
         )
 
-    def fetch_blood_informations(self, html):
+    def find_blood_cards(self, bloods_section):
         html_selector = (
             "p-0 p-lg-1 p-md-1 card-footer w-100 border-0 text-center text-uppercase"
         )
 
-        return html.find_all("div", class_=html_selector)
+        return bloods_section.find_all("div", class_=html_selector)
 
-    def get_blood_collected_at(self, html):
-        return html.find("time")["datetime"]
+    def extract_collection_timestamp(self, document):
+        return document.find("time")["datetime"]
