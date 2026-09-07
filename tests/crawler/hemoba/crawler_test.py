@@ -8,8 +8,6 @@ from app.crawlers.hemoba.crawler import Crawler
 def test_base_perform_is_called_during_initialization(mock_perform):
     crawler = Crawler(autostart=True)
 
-    crawler.perform()
-
     assert crawler is not None
     mock_perform.assert_called_once()
 
@@ -18,7 +16,6 @@ def test_base_perform_is_called_during_initialization(mock_perform):
 def test_get_a_positive_test(download_html, hemoba_html):
     download_html.return_value.text = hemoba_html
     crawler = Crawler(autostart=True)
-    crawler.perform()
 
     assert crawler.data is not None
     assert crawler.data["blood_center"] == "Hemoba"
@@ -33,3 +30,27 @@ def test_get_a_positive_test(download_html, hemoba_html):
         {"name": "O+", "status": "Crítico"},
         {"name": "O-", "status": "Crítico"},
     ]
+
+
+def test_crawler_uses_source_url_from_environment(monkeypatch):
+    monkeypatch.setenv("HEMOBA_SOURCE_URL", "https://hemoba.example/source")
+
+    crawler = Crawler(autostart=False)
+
+    assert crawler.target_url() == "https://hemoba.example/source"
+
+
+def test_crawler_parser_is_hemoba_parser():
+    crawler = Crawler(autostart=False)
+
+    assert crawler.parser().__class__.__name__ == "Parser"
+
+
+def test_crawler_identifies_blood_center():
+    crawler = Crawler(autostart=False)
+
+    assert crawler.blood_center() == {
+        "blood_center": "Hemoba",
+        "city": "Salvador",
+        "state": "BA",
+    }

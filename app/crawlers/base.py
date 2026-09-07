@@ -11,6 +11,9 @@ class Base(ABC):
     def __init__(self, autostart: bool = True):
         self.data = None
 
+        if autostart:
+            self.perform()
+
     def perform(self):
         parsed_doc = self.parse(self.document())
 
