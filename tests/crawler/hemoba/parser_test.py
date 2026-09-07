@@ -4,13 +4,13 @@ from bs4 import BeautifulSoup
 from app.crawlers.hemoba.parser import Parser
 
 
-def test_compose_bloods(hemoba_html):
+def test_parse_blood_availability(hemoba_html):
     parser = Parser()
     parser_html = BeautifulSoup(hemoba_html, "html.parser")
-    compose_bloods = parser.compose_rh(parser_html)
+    blood_availability = parser.parse_blood_availability(parser_html)
 
-    assert compose_bloods is not None
-    assert compose_bloods == [
+    assert blood_availability is not None
+    assert blood_availability == [
         {"name": "A+", "status": "Alerta"},
         {"name": "A-", "status": "Alerta"},
         {"name": "B+", "status": "Alerta"},
@@ -22,32 +22,32 @@ def test_compose_bloods(hemoba_html):
     ]
 
 
-@patch("app.crawlers.hemoba.parser.Parser.parse")
-def test_get_blood_collected_at(parser_mock, hemoba_html):
-    parser_mock.return_value = hemoba_html
+def test_extract_collection_timestamp(hemoba_html):
     parser = Parser()
     parser_html = BeautifulSoup(hemoba_html, "html.parser")
 
     assert parser is not None
-    assert parser.get_blood_collected_at(parser_html) == "2026-07-27T09:35:31-03:00"
+    assert (
+        parser.extract_collection_timestamp(parser_html) == "2026-07-27T09:35:31-03:00"
+    )
 
 
-def test_fetch_bloods(hemoba_html):
+def test_find_blood_section(hemoba_html):
     parser = Parser()
-    parserd_html = BeautifulSoup(hemoba_html, "html.parser")
-    raw_html = parser.fetch_bloods(parserd_html)
+    document = BeautifulSoup(hemoba_html, "html.parser")
+    bloods_section = parser.find_blood_section(document)
 
-    assert raw_html is not None
-    assert "A+" in raw_html.text.strip()
-    assert "AB" in raw_html.text.strip()
+    assert bloods_section is not None
+    assert "A+" in bloods_section.text.strip()
+    assert "AB" in bloods_section.text.strip()
 
 
-def test_fetch_blood_informations(hemoba_html):
+def test_find_blood_cards(hemoba_html):
     parser = Parser()
-    parserd_html = BeautifulSoup(hemoba_html, "html.parser")
-    blodds = parser.fetch_blood_informations(parserd_html)
+    document = BeautifulSoup(hemoba_html, "html.parser")
+    blood_cards = parser.find_blood_cards(parser.find_blood_section(document))
 
-    assert "A+" in blodds[0].text.strip()
-    assert "A-" in blodds[1].text.strip()
-    assert "B+" in blodds[2].text.strip()
-    assert "B-" in blodds[3].text.strip()
+    assert "A+" in blood_cards[0].text.strip()
+    assert "A-" in blood_cards[1].text.strip()
+    assert "B+" in blood_cards[2].text.strip()
+    assert "B-" in blood_cards[3].text.strip()
