@@ -8,6 +8,7 @@ dependencies = [
     "beautifulsoup4>=4.15.0",
     "httpx>=0.28.1",
     "playwright>=1.61.0",
+    "psycopg[binary]>=3.3.5",
     "selectolax>=0.4.11",
     "sqlalchemy>=2.0.51",
 ]
