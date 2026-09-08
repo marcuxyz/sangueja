@@ -1,0 +1,23 @@
+defaukt: &default
+  pool:     {{ ENV.get("DATABASE_POOL", 20) }}
+
+production:
+  <<: *default
+  database: {{ ENV.get("DATABASE_NAME", "sangueja") }}
+  host: {{ ENV.get("DB_HOST", "localhost") }}
+  username: {{ ENV.get("DB_USERNAME", "admin") }}
+  password: {{ ENV.get("DB_PASSWORD", "admin") }}
+
+development:
+  <<: *default
+  database: {{ ENV.get("DATABASE_NAME", "sangueja") }}
+  host: {{ ENV.get("DB_HOST", "localhost") }}
+  username: {{ ENV.get("DB_USERNAME", "admin") }}
+  password: {{ ENV.get("DB_PASSWORD", "admin") }}
+
+test:
+  <<: *default
+  database: {{ ENV.get("DATABASE_NAME", "sangueja") }}
+  host: {{ ENV.get("DB_HOST", "localhost") }}
+  username: {{ ENV.get("DB_USERNAME", "admin") }}
+  password: {{ ENV.get("DB_PASSWORD", "admin") }}
