@@ -22,8 +22,9 @@ def test_load_production_database_config():
         "pool": 20,
         "database": "sangueja",
         "host": "localhost",
-        "username": "admin",
-        "password": "admin",
+        "username": "postgres",
+        "password": "postgres",
+        "port": 5432,
     }
 
 
@@ -35,8 +36,9 @@ def test_load_development_database_config():
         "pool": 20,
         "database": "sangueja",
         "host": "localhost",
-        "username": "admin",
-        "password": "admin",
+        "username": "postgres",
+        "password": "postgres",
+        "port": 5432,
     }
 
 
@@ -48,8 +50,9 @@ def test_load_test_database_config():
         "pool": 20,
         "database": "sangueja",
         "host": "localhost",
-        "username": "admin",
-        "password": "admin",
+        "username": "postgres",
+        "password": "postgres",
+        "port": 5432,
     }
 
 
@@ -60,12 +63,13 @@ def test_database_production_config_attributes():
     assert production.pool == 20
     assert production.host == "localhost"
     assert production.database == "sangueja"
-    assert production.username == "admin"
-    assert production.password == "admin"
+    assert production.username == "postgres"
+    assert production.password == "postgres"
+    assert production.port == 5432
 
 
 def test_production_config_loads_database_name_from_environment_variable(monkeypatch):
-    monkeypatch.setenv("DATABASE_NAME", "sangue123")
+    monkeypatch.setenv("DB_NAME", "sangue123")
 
     db = Database()
     production = db.load_database_yml()["production"]
