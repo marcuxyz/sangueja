@@ -1,0 +1,26 @@
+defaukt: &default
+  pool:     {{ ENV.get("DATABASE_POOL", 20) }}
+
+production:
+  <<: *default
+  database: {{ ENV.get("DB_NAME", "sangueja_production") }}
+  host: {{ ENV.get("DB_HOST", "localhost") }}
+  username: {{ ENV.get("DB_USERNAME", "postgres") }}
+  password: {{ ENV.get("DB_PASSWORD", "postgres") }}
+  port: {{ ENV.get("DB_PORT", 5432) }}
+
+development:
+  <<: *default
+  database: {{ ENV.get("DB_NAME", "sangueja_development") }}
+  host: {{ ENV.get("DB_HOST", "localhost") }}
+  username: {{ ENV.get("DB_USERNAME", "postgres") }}
+  password: {{ ENV.get("DB_PASSWORD", "postgres") }}
+  port: {{ ENV.get("DB_PORT", 5432) }}
+
+test:
+  <<: *default
+  database: {{ ENV.get("DB_NAME", "sangueja_test") }}
+  host: {{ ENV.get("DB_HOST", "localhost") }}
+  username: {{ ENV.get("DB_USERNAME", "postgres") }}
+  password: {{ ENV.get("DB_PASSWORD", "postgres") }}
+  port: {{ ENV.get("DB_PORT", 5432) }}
