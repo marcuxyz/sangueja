@@ -4,7 +4,7 @@ import psycopg
 from pathlib import Path
 from jinja2 import  Template
 
-from ..model import ConnectionModel
+from .model import ConnectionModel
 
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
