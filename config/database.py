@@ -1,8 +1,11 @@
 import os
-from pathlib import Path
-
 import yaml
-from jinja2 import Template
+import psycopg
+from pathlib import Path
+from jinja2 import  Template
+
+from .model import DatabaseConfigModel
+
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DATABASE_CONFIG_PATH = ROOT_DIR / 'config' / 'database.yml'
@@ -16,6 +19,21 @@ class Database:
 
     def create_table(self):
         pass
+
+    def production(self):
+        config = self.load_database_yml()
+
+        return DatabaseConfigModel(**config['production'])
+
+    def development(self):
+        config = self.load_database_yml()
+
+        return DatabaseConfigModel(**config['development'])
+
+    def test(self):
+        config = self.load_database_yml()
+
+        return DatabaseConfigModel(**config['test'])
 
     def load_database_yml(self):
         try:

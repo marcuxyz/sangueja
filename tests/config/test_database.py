@@ -2,7 +2,7 @@ from config.database import DATABASE_CONFIG_PATH, Database
 from unittest import mock
 
 
-def test_must_exists_environments():
+def test_database_yml_contains_all_environments():
     text = None
 
     with open(DATABASE_CONFIG_PATH, "r") as f:
@@ -14,7 +14,7 @@ def test_must_exists_environments():
     assert "production" in text
 
 
-def test_production_setup():
+def test_load_production_database_config():
     db = Database()
     config_production = db.load_database_yml()["production"]
 
@@ -27,7 +27,7 @@ def test_production_setup():
     }
 
 
-def test_development_setup():
+def test_load_development_database_config():
     db = Database()
     config_development = db.load_database_yml()["development"]
 
@@ -40,7 +40,7 @@ def test_development_setup():
     }
 
 
-def test_test_setup():
+def test_load_test_database_config():
     db = Database()
     config_test = db.load_database_yml()["test"]
 
@@ -53,7 +53,18 @@ def test_test_setup():
     }
 
 
-def test_production_get_envrionment_value_from_os(monkeypatch):
+def test_database_production_config_attributes():
+    db = Database()
+    production = db.production()
+
+    assert production.pool == 20
+    assert production.host == "localhost"
+    assert production.database == "sangueja"
+    assert production.username == "admin"
+    assert production.password == "admin"
+
+
+def test_production_config_loads_database_name_from_environment_variable(monkeypatch):
     monkeypatch.setenv("DATABASE_NAME", "sangue123")
 
     db = Database()
