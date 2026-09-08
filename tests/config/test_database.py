@@ -20,7 +20,7 @@ def test_load_production_database_config():
 
     assert config_production == {
         "pool": 20,
-        "database": "sangueja",
+        "database": "sangueja_production",
         "host": "localhost",
         "username": "postgres",
         "password": "postgres",
@@ -34,7 +34,7 @@ def test_load_development_database_config():
 
     assert config_development == {
         "pool": 20,
-        "database": "sangueja",
+        "database": "sangueja_development",
         "host": "localhost",
         "username": "postgres",
         "password": "postgres",
@@ -48,7 +48,7 @@ def test_load_test_database_config():
 
     assert config_test == {
         "pool": 20,
-        "database": "sangueja",
+        "database": "sangueja_test",
         "host": "localhost",
         "username": "postgres",
         "password": "postgres",
@@ -62,7 +62,7 @@ def test_database_production_config_attributes():
 
     assert production.pool == 20
     assert production.host == "localhost"
-    assert production.database == "sangueja"
+    assert production.database == "sangueja_production"
     assert production.username == "postgres"
     assert production.password == "postgres"
     assert production.port == 5432

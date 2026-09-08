@@ -15,7 +15,18 @@ class Database:
         self.config = self.load_database_yml()
 
     def connect(self):
-        pass
+        env = os.getenv("APP_ENV", "development")
+        env_method = getattr(self, env)()
+
+        return psycopg.connect(
+            f"""
+                dbname={env_method.database}
+                user={env_method.username}
+                password={env_method.password}
+                host={env_method.host}
+                port={env_method.port}
+            """
+        )
 
     def create_table(self):
         pass
