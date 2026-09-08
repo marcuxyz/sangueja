@@ -1,5 +1,4 @@
-from config.database import DATABASE_CONFIG_PATH, Database
-from unittest import mock
+from config.db.connection import DATABASE_CONFIG_PATH, Connection
 
 
 def test_database_yml_contains_all_environments():
@@ -15,7 +14,7 @@ def test_database_yml_contains_all_environments():
 
 
 def test_load_production_database_config():
-    db = Database()
+    db = Connection()
     config_production = db.load_database_yml()["production"]
 
     assert config_production == {
@@ -29,49 +28,33 @@ def test_load_production_database_config():
 
 
 def test_load_development_database_config():
-    db = Database()
-    config_development = db.load_database_yml()["development"]
+    db = Connection()
+    model = db.development()
 
-    assert config_development == {
-        "pool": 20,
-        "database": "sangueja_development",
-        "host": "localhost",
-        "username": "postgres",
-        "password": "postgres",
-        "port": 5432,
-    }
+    assert model.pool == 20
+    assert model.host == "localhost"
+    assert model.database == "sangueja_development"
+    assert model.username == "postgres"
+    assert model.password == "postgres"
+    assert model.port == 5432
 
 
 def test_load_test_database_config():
-    db = Database()
-    config_test = db.load_database_yml()["test"]
+    db = Connection()
+    model = db.test()
 
-    assert config_test == {
-        "pool": 20,
-        "database": "sangueja_test",
-        "host": "localhost",
-        "username": "postgres",
-        "password": "postgres",
-        "port": 5432,
-    }
-
-
-def test_database_production_config_attributes():
-    db = Database()
-    production = db.production()
-
-    assert production.pool == 20
-    assert production.host == "localhost"
-    assert production.database == "sangueja_production"
-    assert production.username == "postgres"
-    assert production.password == "postgres"
-    assert production.port == 5432
+    assert model.pool == 20
+    assert model.host == "localhost"
+    assert model.database == "sangueja_test"
+    assert model.username == "postgres"
+    assert model.password == "postgres"
+    assert model.port == 5432
 
 
 def test_production_config_loads_database_name_from_environment_variable(monkeypatch):
     monkeypatch.setenv("DB_NAME", "sangue123")
 
-    db = Database()
+    db = Connection()
     production = db.load_database_yml()["production"]
 
     assert "sangue123" == production["database"]

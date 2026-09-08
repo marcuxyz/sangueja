@@ -4,13 +4,13 @@ import psycopg
 from pathlib import Path
 from jinja2 import  Template
 
-from .model import DatabaseConfigModel
+from ..model import ConnectionModel
 
 
-ROOT_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 DATABASE_CONFIG_PATH = ROOT_DIR / 'config' / 'database.yml'
 
-class Database:
+class Connection:
     def __init__(self):
         self.config = self.load_database_yml()
 
@@ -34,17 +34,17 @@ class Database:
     def production(self):
         config = self.load_database_yml()
 
-        return DatabaseConfigModel(**config['production'])
+        return ConnectionModel(**config['production'])
 
     def development(self):
         config = self.load_database_yml()
 
-        return DatabaseConfigModel(**config['development'])
+        return ConnectionModel(**config['development'])
 
     def test(self):
         config = self.load_database_yml()
 
-        return DatabaseConfigModel(**config['test'])
+        return ConnectionModel(**config['test'])
 
     def load_database_yml(self):
         try:
