@@ -3,34 +3,40 @@ from abc import ABC, abstractmethod
 from bs4 import BeautifulSoup
 
 from app.http.client import HttpClient
-from config.db.connection import Connection
-from config.db.query import Query
+from app.repositories.blood_center import BloodCenterRepository
 
 
 class Base(ABC):
-    def __init__(self, autostart: bool = True):
-        self.query = Query(Connection())
+    def __init__(
+        self,
+        blood_center_repository: BloodCenterRepository | None = None,
+    ):
+        self.blood_center_repository = blood_center_repository or BloodCenterRepository()
 
     def perform(self):
         parsed_doc = self.parse(self.document())
         params = self.blood_center()
 
-        insert_sql = "INSERT INTO blood_centers(name, city, state, address) VALUES (%s, %s, %s, %s)"
-        query_sql = "SELECT name FROM blood_centers WHERE name = %s;"
-
-        self.query.find_or_create(insert_sql, query_sql, params)
+        self.save_blood_data(params, parsed_doc)
 
         return params | parsed_doc
+
+    def save_blood_data(self, blood_center, parsed_document):
+        self.blood_center_repository.save_snapshot(
+            blood_center,
+            parsed_document["collected_at"],
+            parsed_document["bloods"],
+        )
 
     def download_page(self):
         client = HttpClient(url=self.target_url())
 
         return client.download_html()
 
-    def parse(self, docuemnt):
+    def parse(self, document):
         parser = self.parser()
 
-        return parser.parse(docuemnt)
+        return parser.parse(document)
 
     def document(self):
         page = self.download_page()

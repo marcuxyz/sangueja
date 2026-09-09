@@ -103,6 +103,14 @@ class Transaction:
             print(f"Error dropping tables: {e}")
 
 
-    def _execute_query(self, query: str):
+    def insert_blood_type(self, name: str):
+        query = """
+            INSERT INTO blood_types (name)
+            VALUES (%s)
+            ON CONFLICT (name) DO NOTHING;
+        """
+        self._execute_query(query, (name,))
+
+    def _execute_query(self, query: str, params: tuple | None = None):
         with self.conn.cursor() as cursor:
-            cursor.execute(query)
+            cursor.execute(query, params)

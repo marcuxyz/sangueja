@@ -22,14 +22,24 @@ def test_return_data_of_database_test(download_html, hemoba_html):
     download_html.return_value.text = hemoba_html
 
     transaction.create_all()
+    for blood_type in ("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"):
+        transaction.insert_blood_type(blood_type)
+    conn.commit()
+
     crawler = Crawler()
     crawler.perform()
 
     with conn.cursor() as cur:
         cur.execute("SELECT name, city, state, address FROM blood_centers;")
         blood_center = cur.fetchone()
+        cur.execute("SELECT COUNT(*) FROM blood_center_stocks;")
+        blood_center_stocks = cur.fetchone()[0]
+        cur.execute("SELECT COUNT(*) FROM blood_stock_items;")
+        blood_stock_items = cur.fetchone()[0]
 
     assert blood_center is not None
+    assert blood_center_stocks == 1
+    assert blood_stock_items == 8
 
     transaction.drop_all()
 
