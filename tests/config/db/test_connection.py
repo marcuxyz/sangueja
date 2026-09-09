@@ -13,7 +13,10 @@ def test_database_yml_contains_all_environments():
     assert "production" in text
 
 
-def test_load_production_database_config():
+def test_load_production_database_config(monkeypatch):
+    monkeypatch.setenv("ENV_PATH", "production")
+    monkeypatch.setenv("DB_NAME", "sangueja_production")
+
     db = Connection()
     config_production = db.load_database_yml()["production"]
 
@@ -27,7 +30,10 @@ def test_load_production_database_config():
     }
 
 
-def test_load_development_database_config():
+def test_load_development_database_config(monkeypatch):
+    monkeypatch.setenv("ENV_PATH", "development")
+    monkeypatch.setenv("DB_NAME", "sangueja_development")
+
     db = Connection()
     model = db.development()
 
