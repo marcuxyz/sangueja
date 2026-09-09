@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class DatabaseConfigModel(BaseModel):
+class ConnectionModel(BaseModel):
     pool: int
     database: str
     host: str
