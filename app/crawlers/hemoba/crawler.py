@@ -16,7 +16,8 @@ class Crawler(Base):
 
     def blood_center(self):
         return {
-            "blood_center": "Hemoba",
+            "name": "Hemoba",
             "city": "Salvador",
             "state": "BA",
+            "address": "Ladeira do Hospital Geral, s/n, Brotas - Cep: 40.286-240 - Complexo HGE, Hemoba e Cican",
         }
