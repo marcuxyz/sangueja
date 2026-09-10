@@ -1,5 +1,8 @@
+from app.crawlers.hemoba.crawler import Crawler
+
 def main():
-    print("Hello from sangueja!")
+    crawl = Crawler()
+    crawl.perform()
 
 
 if __name__ == "__main__":
