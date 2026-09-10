@@ -28,9 +28,6 @@ class Connection:
             """
         )
 
-    def create_table(self):
-        pass
-
     def production(self):
         config = self.load_database_yml()
 

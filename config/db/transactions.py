@@ -12,6 +12,9 @@ class Transaction:
         CREATE TABLE IF NOT EXISTS blood_centers (
             id SERIAL PRIMARY KEY,
             name VARCHAR(255) UNIQUE NOT NULL,
+            city VARCHAR(120) NOT NULL,
+            state VARCHAR(20) NOT NULL,
+            address VARCHAR(160) NOT NULL,
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         );
@@ -100,6 +103,14 @@ class Transaction:
             print(f"Error dropping tables: {e}")
 
 
-    def _execute_query(self, query: str):
+    def insert_blood_type(self, name: str):
+        query = """
+            INSERT INTO blood_types (name)
+            VALUES (%s)
+            ON CONFLICT (name) DO NOTHING;
+        """
+        self._execute_query(query, (name,))
+
+    def _execute_query(self, query: str, params: tuple | None = None):
         with self.conn.cursor() as cursor:
-            cursor.execute(query)
+            cursor.execute(query, params)

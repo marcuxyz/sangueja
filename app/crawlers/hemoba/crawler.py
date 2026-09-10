@@ -5,8 +5,8 @@ from app.crawlers.hemoba.parser import Parser
 
 
 class Crawler(Base):
-    def __init__(self, autostart: bool = False):
-        super().__init__(autostart=autostart)
+    def __init__(self):
+        super().__init__()
 
     def parser(self):
         return Parser()
@@ -16,7 +16,8 @@ class Crawler(Base):
 
     def blood_center(self):
         return {
-            "blood_center": "Hemoba",
+            "name": "Hemoba",
             "city": "Salvador",
             "state": "BA",
+            "address": "Ladeira do Hospital Geral, s/n, Brotas - Cep: 40.286-240 - Complexo HGE, Hemoba e Cican",
         }
