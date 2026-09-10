@@ -1,0 +1,33 @@
+name: Cron Daily
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 18 * * *'
+
+jobs:
+  run-crawler:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: '3.14.6'
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install dependencies
+        run: uv sync --frozen
+
+      - name: Run Crawler Script
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: python main.py
