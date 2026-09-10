@@ -12,7 +12,7 @@ class Crawler(Base):
         return Parser()
 
     def target_url(self):
-        return os.getenv("HEMOBA_SOURCE_URL")
+        return os.getenv("HEMOBA_SOURCE_URL", "https://www.ba.gov.br/hemoba/")
 
     def blood_center(self):
         return {
