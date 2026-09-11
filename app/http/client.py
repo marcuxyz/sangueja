@@ -65,7 +65,7 @@ class HttpClient:
                 self.url,
                 timeout=30,
                 headers=headers,
-                params=params
+                params=params,
             )
 
             response.raise_for_status()
