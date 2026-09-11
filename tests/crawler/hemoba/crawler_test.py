@@ -15,11 +15,17 @@ def test_base_perform_is_called_once_times(mock_perform):
     mock_perform.assert_called_once()
 
 
+@patch.object(Crawler, "send_alert")
 @patch("app.crawlers.base.HttpClient.download_html")
-def test_return_data_of_database_test(download_html, hemoba_html):
+def test_return_data_of_database_test(
+    download_html, mock_send_alert, hemoba_html, monkeypatch
+):
     conn = Connection().connect()
     transaction = Transaction(conn)
     download_html.return_value.text = hemoba_html
+    monkeypatch.setenv("WHATSAPP_URL", "https://test.whatsapp")
+    monkeypatch.setenv("WHATSAPP_TOKEN", "9A8897CGS7")
+    monkeypatch.setenv("WHATSAPP_NUMBER", "719899999999")
 
     transaction.create_all()
     for blood_type in ("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"):
@@ -28,6 +34,7 @@ def test_return_data_of_database_test(download_html, hemoba_html):
 
     crawler = Crawler()
     crawler.perform()
+    crawler.send_alert()
 
     with conn.cursor() as cur:
         cur.execute("SELECT name, city, state, address FROM blood_centers;")
@@ -40,6 +47,7 @@ def test_return_data_of_database_test(download_html, hemoba_html):
     assert blood_center is not None
     assert blood_center_stocks == 1
     assert blood_stock_items == 8
+    mock_send_alert.assert_called_once_with()
 
     transaction.drop_all()
 
@@ -49,19 +57,19 @@ def test_crawler_uses_source_url_from_environment(monkeypatch):
 
     crawler = Crawler()
 
-    assert crawler.target_url() == "https://hemoba.example/source"
+    assert crawler.source_url() == "https://hemoba.example/source"
 
 
 def test_crawler_parser_is_hemoba_parser():
     crawler = Crawler()
 
-    assert crawler.parser().__class__.__name__ == "Parser"
+    assert crawler.create_parser().__class__.__name__ == "Parser"
 
 
 def test_crawler_identifies_blood_center():
     crawler = Crawler()
 
-    assert crawler.blood_center() == {
+    assert crawler.blood_center_data() == {
         "name": "Hemoba",
         "city": "Salvador",
         "state": "BA",
