@@ -46,7 +46,7 @@ class HttpClient:
         except httpx.HTTPError as error:
             raise RuntimeError(f"failed to download #{error}") from error
 
-    def send(self, params: dict = None, headers: dict = None) -> str:
+    def send(self, data: dict = None, headers: dict = None) -> str:
         """Send a POST request to the configured URL.
 
         Args:
@@ -65,7 +65,7 @@ class HttpClient:
                 self.url,
                 timeout=30,
                 headers=headers,
-                params=params,
+                json=data,
             )
 
             response.raise_for_status()

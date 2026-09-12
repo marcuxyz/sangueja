@@ -21,10 +21,10 @@ class Whatsapp:
             RuntimeError: If the WhatsApp request fails.
         """
         headers = self.headers()
-        params = self.params(message=message)
+        data = self.payload(message=message)
 
         try:
-            response = self.client.send(headers=headers, params=params)
+            response = self.client.send(headers=headers, data=data)
             return response.status_code == 200
         except httpx.HTTPError as error:
             raise RuntimeError(f"failed to connect a whatsapp #{error}") from error
@@ -35,14 +35,13 @@ class Whatsapp:
         Returns:
             A dictionary containing the content type, accepted format, and API token.
         """
-        headers = {
+        return {
             "Accept": "application/json",
             "Content-Type": "application/json",
             "token": os.environ["WHATSAPP_TOKEN"],
         }
-        return headers
 
-    def params(self, message: str) -> dict:
+    def payload(self, message: str) -> dict:
         """Build the parameters required to send a WhatsApp message.
 
         Args:
@@ -51,4 +50,7 @@ class Whatsapp:
         Returns:
             A dictionary containing the recipient number and message text.
         """
-        return {"number": os.environ["WHATSAPP_NUMBER"], "text": message}
+        return {
+            "number": os.environ["WHATSAPP_NUMBER"],
+            "text": message,
+        }

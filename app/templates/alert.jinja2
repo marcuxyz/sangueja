@@ -1,8 +1,9 @@
 
-🩸 {{ blood_center_name }} — Estoque em atenção
+🔴 {{ blood_center_name }} — Estoque em atenção
 
 {% for blood_type in blood_types %}
-  🔴 {{ blood_type["name"] }} — {{ blood_type["status"] }}
+🩸 Tipo sanguíneo: {{ blood_type["name"] }}
+🔴 Status: {{ blood_type["status"] }}
 {% endfor %}
 
 🏥 Hemocentro:  {{ blood_center_name }} —  {{ blood_center_city }}

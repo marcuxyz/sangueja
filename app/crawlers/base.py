@@ -20,7 +20,7 @@ class Base(ABC):
 
         self.save_blood_data(blood_center_data, parsed_document)
 
-        return blood_center_data | parsed_document
+        return self.combined_data
 
     def save_blood_data(self, blood_center_data, parsed_document):
         self.blood_center_repository.save_snapshot(
