@@ -33,7 +33,8 @@ def test_return_data_of_database_test(
     conn.commit()
 
     crawler = Crawler()
-    crawler.perform()
+    first_result = crawler.perform()
+    second_result = crawler.perform()
     crawler.send_alert()
 
     with conn.cursor() as cur:
@@ -44,10 +45,11 @@ def test_return_data_of_database_test(
         cur.execute("SELECT COUNT(*) FROM blood_stock_items;")
         blood_stock_items = cur.fetchone()[0]
 
+    mock_send_alert.assert_called_once_with()
     assert blood_center is not None
     assert blood_center_stocks == 1
     assert blood_stock_items == 8
-    mock_send_alert.assert_called_once_with()
+    assert second_result == first_result
 
     transaction.drop_all()
 

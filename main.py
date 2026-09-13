@@ -5,6 +5,5 @@ def main():
     crawl.perform()
     crawl.send_alert()
 
-
 if __name__ == "__main__":
     main()

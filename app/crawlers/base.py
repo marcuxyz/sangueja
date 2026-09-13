@@ -18,12 +18,14 @@ class Base(ABC):
         blood_center_data = self.blood_center_data()
         self.combined_data = parsed_document | blood_center_data
 
-        self.save_blood_data(blood_center_data, parsed_document)
+        snapshot_exists = self.save_blood_data(blood_center_data, parsed_document)
+        if snapshot_exists:
+            return self.combined_data
 
         return self.combined_data
 
     def save_blood_data(self, blood_center_data, parsed_document):
-        self.blood_center_repository.save_snapshot(
+        return self.blood_center_repository.save_snapshot(
             blood_center_data,
             parsed_document["collected_at"],
             parsed_document["bloods"],
