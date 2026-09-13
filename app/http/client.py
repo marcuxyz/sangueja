@@ -45,3 +45,31 @@ class HttpClient:
             return response
         except httpx.HTTPError as error:
             raise RuntimeError(f"failed to download #{error}") from error
+
+    def send(self, data: dict = None, headers: dict = None) -> str:
+        """Send a POST request to the configured URL.
+
+        Args:
+            headers: HTTP headers to include in the request.
+            params: Query parameters to include in the request.
+
+        Returns:
+            The HTTP response returned by the server.
+
+        Raises:
+            RuntimeError: If the request fails or returns an HTTP error.
+        """
+        try:
+
+            response = self.client().post(
+                self.url,
+                timeout=30,
+                headers=headers,
+                json=data,
+            )
+
+            response.raise_for_status()
+
+            return response
+        except httpx.HTTPError as error:
+            raise RuntimeError(f"failed to download #{error}") from error
