@@ -34,5 +34,8 @@ jobs:
           DB_NAME: ${{ secrets.DB_NAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_PORT: ${{ secrets.DB_PORT }}
+          WHATSAPP_URL: ${{ secrets.WHATSAPP_URL }}
+          WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
+          WHATSAPP_NUMBER: ${{ secrets.WHATSAPP_NUMBER }}
 
         run: python main.py
