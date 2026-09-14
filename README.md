@@ -23,11 +23,11 @@ O **SangueJá** nasceu para reunir essas informações em um único lugar e noti
 ## ✨ Funcionalidades
 
 * 🩸 Monitoramento automático dos estoques de sangue
-* 📢 Alertas de campanhas de doação **(Ainda não implementado)**
+* 📢 ~~Alertas de campanhas de doação~~ **(Ainda não implementado)**
 *  ~~🔔 Notificações para doadores cadastrados~~ **(Ainda não implementado)**
-* 📍 Consulta de hemocentros
-* ~~📈 Histórico da situação dos estoques~~ **(Ainda não implementado)**
-* ~~🌎 Expansão gradual para todos os estados brasileiros~~ **(Ainda não implementado)**
+* 📍 ~~Consulta de hemocentros~~
+* 📈 Histórico da situação dos estoques
+* 🌎 Expansão gradual para todos os estados brasileiros
 * ❤️ Projeto totalmente Open Source
 
 ---
