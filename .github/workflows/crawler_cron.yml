@@ -3,6 +3,7 @@ name: Cron Daily
 on:
   schedule:
     - cron: '0 14 * * 1-5'
+      timezone: 'America/Sao_Paulo'
   workflow_dispatch:
 
 jobs:
