@@ -16,3 +16,5 @@ wheels/
 *.sqlite
 *.sqlite3
 *.db
+
+github_actions/*
