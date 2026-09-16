@@ -15,36 +15,24 @@ class BaseCrawler(ABC):
         self.client = client or HttpClient()
         self.blood_center_repository = blood_center_repository or BloodCenterRepository()
 
-    def perform(self):
+    def execute(self):
         raw_html = self.fetch()
         parsed_data = self.parse(raw_html)
-        blood_center_data = self.blood_center_data()
-        self.combined_data = parsed_data | blood_center_data
+        self.combined_data = parsed_data
 
-        snapshot_exists = self.save_blood_data(blood_center_data, parsed_data)
+        snapshot_exists = self.save_blood_data(parsed_data)
         if snapshot_exists:
             return self.combined_data
 
         return self.combined_data
 
-    def save_blood_data(self, blood_center_data, parsed_document):
+    def save_blood_data(self, parsed_document):
         return self.blood_center_repository.save_snapshot(
-            blood_center_data,
+            self.blood_center_name,
             parsed_document["collected_at"],
             parsed_document["bloods"],
         )
 
     @abstractmethod
-    def blood_center_data(self):
-        raise NotImplementedError(
-            f"{self.__class__.__name__} must define blood_center_data()"
-        )
-
-    @abstractmethod
     def parse(self):
         raise NotImplementedError(f"{self.__class__.__name__} must define parse()")
-
-    def blood_center_data(self):
-        raise NotImplementedError(
-            "Subclasses must implement the blood_center_data method."
-        )

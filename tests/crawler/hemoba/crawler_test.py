@@ -7,13 +7,13 @@ from config.db.transactions import Transaction
 from app.http.client import HttpClient
 
 
-@patch.object(BaseCrawler, "perform", return_value={"name": "Hemoba"})
-def test_base_perform_is_called_once_times(mock_perform):
+@patch.object(BaseCrawler, "execute", return_value={"name": "Hemoba"})
+def test_base_execute_is_called_once_times(mock_execute):
     crawler = HemobaCrawler()
-    crawler.perform()
+    crawler.execute()
 
     assert crawler is not None
-    mock_perform.assert_called_once()
+    mock_execute.assert_called_once()
 
 
 @patch.object(HemobaCrawler, "send_alert")
@@ -32,14 +32,21 @@ def test_return_data_of_database_test(
     for blood_type in ("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"):
         transaction.insert_blood_type(blood_type)
     conn.commit()
+    with conn.cursor() as cursor:
+        cursor.execute(
+            "INSERT INTO blood_centers(name) VALUES (%s)"
+            + " ON CONFLICT (name) DO NOTHING",
+            ("Hemoba",),
+        )
+        conn.commit()
 
     crawler = HemobaCrawler()
-    first_result = crawler.perform()
-    second_result = crawler.perform()
+    first_result = crawler.execute()
+    second_result = crawler.execute()
     crawler.send_alert()
 
     with conn.cursor() as cur:
-        cur.execute("SELECT name, city, state, address FROM blood_centers;")
+        cur.execute("SELECT name FROM blood_centers;")
         blood_center = cur.fetchone()
         cur.execute("SELECT COUNT(*) FROM blood_center_stocks;")
         blood_center_stocks = cur.fetchone()[0]
@@ -65,14 +72,3 @@ def test_crawler_parser_is_hemoba_parser():
     crawler = HemobaCrawler()
 
     assert crawler._parser.__class__.__name__ == "Parser"
-
-
-def test_crawler_identifies_blood_center():
-    crawler = HemobaCrawler()
-
-    assert crawler.blood_center_data() == {
-        "name": "Hemoba",
-        "city": "Salvador",
-        "state": "BA",
-        "address": "Ladeira do Hospital Geral, s/n, Brotas - Cep: 40.286-240 - Complexo HGE, Hemoba e Cican",
-    }

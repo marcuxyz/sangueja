@@ -18,6 +18,7 @@ class HemobaCrawler(BaseCrawler):
     def __init__(self):
         super().__init__()
 
+        self.blood_center_name = "Hemoba"
         self._parser = Parser()
 
     def fetch(self) -> str:
@@ -43,15 +44,7 @@ class HemobaCrawler(BaseCrawler):
             }
         )
 
-        # whatsapp_service.send_notification(message=rendered_alert)
-
-    def blood_center_data(self):
-        return {
-            "name": "Hemoba",
-            "city": "Salvador",
-            "state": "BA",
-            "address": "Ladeira do Hospital Geral, s/n, Brotas - Cep: 40.286-240 - Complexo HGE, Hemoba e Cican",
-        }
+        whatsapp_service.send_notification(message=rendered_alert)
 
     def is_critical_blood_type(self, blood_type):
         return blood_type["status"].lower() == "crítico"
