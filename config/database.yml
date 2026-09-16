@@ -1,5 +1,6 @@
-defaukt: &default
+default: &default
   pool:     {{ ENV.get("DATABASE_POOL", 20) }}
+
 
 production:
   <<: *default

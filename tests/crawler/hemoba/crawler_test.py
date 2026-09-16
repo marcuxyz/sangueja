@@ -54,6 +54,25 @@ def test_return_data_of_database_test(
     transaction.drop_all()
 
 
+@patch("app.crawlers.base.HttpClient.download_html")
+def test_return_critical_blood_types(download_html, hemoba_html):
+    download_html.return_value.text = hemoba_html
+    crawler = Crawler()
+
+    crawler.perform()
+
+    warning_blood_types = list(crawler.filter_warning_blood_types())
+
+    assert warning_blood_types == [
+        {"name": "A+", "status": "Alerta"},
+        {"name": "A-", "status": "Alerta"},
+        {"name": "B+", "status": "Alerta"},
+        {"name": "B-", "status": "Crítico"},
+        {"name": "O+", "status": "Crítico"},
+        {"name": "O-", "status": "Crítico"},
+    ]
+
+
 def test_crawler_uses_source_url_from_environment(monkeypatch):
     monkeypatch.setenv("HEMOBA_SOURCE_URL", "https://hemoba.example/source")
 

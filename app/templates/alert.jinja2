@@ -2,8 +2,13 @@
 🔴 {{ blood_center_name }} — Estoque em atenção
 
 {% for blood_type in blood_types %}
-🩸 Tipo sanguíneo: {{ blood_type["name"] }}
-🔴 Status: {{ blood_type["status"] }}
+  {% if blood_type == 'crítico '%}
+    🩸 Tipo sanguíneo: {{ blood_type["name"] }}
+    🔴 Status: {{ blood_type["status"] }}
+  {% else %}
+    🩸 Tipo sanguíneo: {{ blood_type["name"] }}
+    🟡 Status: {{ blood_type["status"] }}
+  {% endif %}
 {% endfor %}
 
 🏥 Hemocentro:  {{ blood_center_name }} —  {{ blood_center_city }}

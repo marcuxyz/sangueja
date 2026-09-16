@@ -24,9 +24,7 @@ class Crawler(Base):
     def send_alert(self):
         whatsapp_service = Whatsapp()
         alert_template = TEMPLATE_PATH.read_text(encoding="utf-8")
-        critical_blood_types = filter(
-            self.is_critical_blood_type, self.combined_data["bloods"]
-        )
+        critical_blood_types = self.filter_warning_blood_types()
         rendered_alert = Template(alert_template).render(
             {
                 "blood_center_name": self.combined_data["name"],
@@ -47,5 +45,8 @@ class Crawler(Base):
             "address": "Ladeira do Hospital Geral, s/n, Brotas - Cep: 40.286-240 - Complexo HGE, Hemoba e Cican",
         }
 
+    def filter_warning_blood_types(self):
+        return filter(self.is_critical_blood_type, self.combined_data["bloods"])
+
     def is_critical_blood_type(self, blood_type):
-        return blood_type["status"].lower() == "crítico"
+        return blood_type["status"].lower() in ["crítico", "alerta"]
