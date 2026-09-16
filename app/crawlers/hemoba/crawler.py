@@ -29,8 +29,6 @@ class Crawler(Base):
             {
                 "blood_center_name": self.combined_data["name"],
                 "blood_types": critical_blood_types,
-                "blood_center_city": self.combined_data["city"],
-                "blood_center_address": self.combined_data["address"],
                 "collected_at": self.combined_data["collected_at"],
             }
         )
