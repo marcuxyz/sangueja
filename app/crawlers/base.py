@@ -6,7 +6,7 @@ from app.http.client import HttpClient
 from app.repositories.blood_center import BloodCenterRepository
 
 
-class Base(ABC):
+class BaseCrawler(ABC):
     def __init__(
         self,
         blood_center_repository: BloodCenterRepository | None = None,

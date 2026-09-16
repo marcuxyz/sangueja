@@ -3,7 +3,7 @@ from pathlib import Path
 
 from jinja2 import Template
 
-from app.crawlers.base import Base
+from app.crawlers.base import BaseCrawler
 from app.crawlers.hemoba.parser import Parser
 from app.services.whatsapp import Whatsapp
 
@@ -11,7 +11,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 TEMPLATE_PATH = ROOT_DIR / "templates" / "alert.jinja2"
 
 
-class HemobaCrawler(Base):
+class HemobaCrawler(BaseCrawler):
     def __init__(self):
         super().__init__()
 
