@@ -11,7 +11,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 TEMPLATE_PATH = ROOT_DIR / "templates" / "alert.jinja2"
 
 
-class Crawler(Base):
+class HemobaCrawler(Base):
     def __init__(self):
         super().__init__()
 
