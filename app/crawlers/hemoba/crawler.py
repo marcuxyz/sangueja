@@ -6,20 +6,26 @@ from jinja2 import Template
 from app.crawlers.base import BaseCrawler
 from app.crawlers.hemoba.parser import Parser
 from app.services.whatsapp import Whatsapp
+from app.http.client import HttpClient
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 TEMPLATE_PATH = ROOT_DIR / "templates" / "alert.jinja2"
 
 
 class HemobaCrawler(BaseCrawler):
+    URL = "http://www.hemoba.ba.gov.br/"
+
     def __init__(self):
         super().__init__()
 
-    def create_parser(self):
-        return Parser()
+        self._parser = Parser()
 
-    def source_url(self):
-        return os.getenv("HEMOBA_SOURCE_URL", "https://www.ba.gov.br/hemoba/")
+    def fetch(self) -> str:
+        response = self.client.download_html()
+        return response.text
+
+    def parse(self, raw_html: str):
+        return self._parser.parse(raw_html)
 
     def send_alert(self):
         whatsapp_service = Whatsapp()
@@ -37,7 +43,7 @@ class HemobaCrawler(BaseCrawler):
             }
         )
 
-        whatsapp_service.send_notification(message=rendered_alert)
+        # whatsapp_service.send_notification(message=rendered_alert)
 
     def blood_center_data(self):
         return {

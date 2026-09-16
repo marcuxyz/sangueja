@@ -4,6 +4,7 @@ from app.crawlers.base import BaseCrawler
 from app.crawlers.hemoba.crawler import HemobaCrawler
 from config.db.connection import Connection
 from config.db.transactions import Transaction
+from app.http.client import HttpClient
 
 
 @patch.object(BaseCrawler, "perform", return_value={"name": "Hemoba"})
@@ -54,18 +55,16 @@ def test_return_data_of_database_test(
     transaction.drop_all()
 
 
-def test_crawler_uses_source_url_from_environment(monkeypatch):
-    monkeypatch.setenv("HEMOBA_SOURCE_URL", "https://hemoba.example/source")
-
+def test_crawler_uses_source_url_from_environment():
     crawler = HemobaCrawler()
 
-    assert crawler.source_url() == "https://hemoba.example/source"
+    assert crawler.URL == "http://www.hemoba.ba.gov.br/"
 
 
 def test_crawler_parser_is_hemoba_parser():
     crawler = HemobaCrawler()
 
-    assert crawler.create_parser().__class__.__name__ == "Parser"
+    assert crawler._parser.__class__.__name__ == "Parser"
 
 
 def test_crawler_identifies_blood_center():
