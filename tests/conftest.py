@@ -1,5 +1,7 @@
 import pytest
+
 from dotenv import load_dotenv
+from rich import print
 
 from config.db.connection import Connection
 from config.db.transactions import Transaction
