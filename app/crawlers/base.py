@@ -9,16 +9,19 @@ from app.repositories.blood_center import BloodCenterRepository
 class BaseCrawler(ABC):
     def __init__(
         self,
+        client: HttpClient | None = None,
         blood_center_repository: BloodCenterRepository | None = None,
     ):
+        self.client = client or HttpClient()
         self.blood_center_repository = blood_center_repository or BloodCenterRepository()
 
     def perform(self):
-        parsed_document = self.parse(self.document())
+        raw_html = self.fetch()
+        parsed_data = self.parse(raw_html)
         blood_center_data = self.blood_center_data()
-        self.combined_data = parsed_document | blood_center_data
+        self.combined_data = parsed_data | blood_center_data
 
-        snapshot_exists = self.save_blood_data(blood_center_data, parsed_document)
+        snapshot_exists = self.save_blood_data(blood_center_data, parsed_data)
         if snapshot_exists:
             return self.combined_data
 
@@ -31,31 +34,16 @@ class BaseCrawler(ABC):
             parsed_document["bloods"],
         )
 
-    def download_page(self):
-        client = HttpClient(url=self.source_url())
-
-        return client.download_html()
-
-    def parse(self, document):
-        document_parser = self.create_parser()
-
-        return document_parser.parse(document)
-
-    def document(self):
-        page = self.download_page()
-
-        return BeautifulSoup(page.text, "html.parser")
-
-    def create_parser(self):
+    @abstractmethod
+    def blood_center_data(self):
         raise NotImplementedError(
-            f"{self.__class__.__name__} must define create_parser()"
+            f"{self.__class__.__name__} must define blood_center_data()"
         )
 
     @abstractmethod
-    def source_url(self):
-        raise NotImplementedError("Subclasses must implement the source_url method.")
+    def parse(self):
+        raise NotImplementedError(f"{self.__class__.__name__} must define parse()")
 
-    @abstractmethod
     def blood_center_data(self):
         raise NotImplementedError(
             "Subclasses must implement the blood_center_data method."
