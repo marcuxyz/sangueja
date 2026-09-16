@@ -1,12 +1,12 @@
 from unittest.mock import patch
 
-from app.crawlers.base import Base
+from app.crawlers.base import BaseCrawler
 from app.crawlers.hemoba.crawler import HemobaCrawler
 from config.db.connection import Connection
 from config.db.transactions import Transaction
 
 
-@patch.object(Base, "perform", return_value={"name": "Hemoba"})
+@patch.object(BaseCrawler, "perform", return_value={"name": "Hemoba"})
 def test_base_perform_is_called_once_times(mock_perform):
     crawler = HemobaCrawler()
     crawler.perform()
