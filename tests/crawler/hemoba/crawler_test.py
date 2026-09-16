@@ -17,20 +17,14 @@ def test_base_perform_is_called_once_times(mock_perform):
 
 @patch.object(Crawler, "send_alert")
 @patch("app.crawlers.base.HttpClient.download_html")
-def test_return_data_of_database_test(
+def test_return_data_of_database(
     download_html, mock_send_alert, hemoba_html, monkeypatch
 ):
     conn = Connection().connect()
-    transaction = Transaction(conn)
     download_html.return_value.text = hemoba_html
     monkeypatch.setenv("WHATSAPP_URL", "https://test.whatsapp")
     monkeypatch.setenv("WHATSAPP_TOKEN", "9A8897CGS7")
     monkeypatch.setenv("WHATSAPP_NUMBER", "719899999999")
-
-    transaction.create_all()
-    for blood_type in ("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"):
-        transaction.insert_blood_type(blood_type)
-    conn.commit()
 
     crawler = Crawler()
     first_result = crawler.perform()
@@ -50,8 +44,6 @@ def test_return_data_of_database_test(
     assert blood_center_stocks == 1
     assert blood_stock_items == 8
     assert second_result == first_result
-
-    transaction.drop_all()
 
 
 @patch("app.crawlers.base.HttpClient.download_html")
