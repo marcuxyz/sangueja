@@ -1,21 +1,21 @@
 from unittest.mock import patch
 
 from app.crawlers.base import Base
-from app.crawlers.hemoba.crawler import Crawler
+from app.crawlers.hemoba.crawler import HemobaCrawler
 from config.db.connection import Connection
 from config.db.transactions import Transaction
 
 
 @patch.object(Base, "perform", return_value={"name": "Hemoba"})
 def test_base_perform_is_called_once_times(mock_perform):
-    crawler = Crawler()
+    crawler = HemobaCrawler()
     crawler.perform()
 
     assert crawler is not None
     mock_perform.assert_called_once()
 
 
-@patch.object(Crawler, "send_alert")
+@patch.object(HemobaCrawler, "send_alert")
 @patch("app.crawlers.base.HttpClient.download_html")
 def test_return_data_of_database(
     download_html, mock_send_alert, hemoba_html, monkeypatch
@@ -68,19 +68,19 @@ def test_return_critical_blood_types(download_html, hemoba_html):
 def test_crawler_uses_source_url_from_environment(monkeypatch):
     monkeypatch.setenv("HEMOBA_SOURCE_URL", "https://hemoba.example/source")
 
-    crawler = Crawler()
+    crawler = HemobaCrawler()
 
     assert crawler.source_url() == "https://hemoba.example/source"
 
 
 def test_crawler_parser_is_hemoba_parser():
-    crawler = Crawler()
+    crawler = HemobaCrawler()
 
     assert crawler.create_parser().__class__.__name__ == "Parser"
 
 
 def test_crawler_identifies_blood_center():
-    crawler = Crawler()
+    crawler = HemobaCrawler()
 
     assert crawler.blood_center_data() == {
         "name": "Hemoba",
