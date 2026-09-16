@@ -20,6 +20,14 @@ def before():
         transaction.insert_blood_type(blood_type)
     connection.commit()
 
+    with connection.cursor() as cursor:
+        cursor.execute(
+            "INSERT INTO blood_centers(name) VALUES (%s)"
+            + " ON CONFLICT (name) DO NOTHING",
+            ("Hemoba",),
+        )
+        connection.commit()
+
     try:
         yield connection
     finally:

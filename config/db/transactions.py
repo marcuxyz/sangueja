@@ -12,9 +12,6 @@ class Transaction:
         CREATE TABLE IF NOT EXISTS blood_centers (
             id SERIAL PRIMARY KEY,
             name VARCHAR(255) UNIQUE NOT NULL,
-            city VARCHAR(120) NOT NULL,
-            state VARCHAR(20) NOT NULL,
-            address VARCHAR(160) NOT NULL,
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
         );

@@ -5,10 +5,7 @@ from config.db.query import Query
 
 
 class BloodCenterRepository:
-    INSERT_SQL = (
-        "INSERT INTO blood_centers(name, city, state, address) "
-        "VALUES (%s, %s, %s, %s)"
-    )
+    INSERT_SQL = "INSERT INTO blood_centers(name) " "VALUES (%s, %s, %s, %s)"
     FIND_SQL = "SELECT name FROM blood_centers WHERE name = %s;"
     FIND_CENTER_ID_SQL = "SELECT id FROM blood_centers WHERE name = %s;"
     FIND_STOCK_SQL = (
@@ -38,28 +35,18 @@ class BloodCenterRepository:
 
     def save_snapshot(
         self,
-        blood_center: Mapping[str, str],
+        blood_center_name: str,
         collected_at: str,
         bloods: list[Mapping[str, str]],
     ) -> bool:
         connection = self.query.conn
-
         try:
             with connection.cursor() as cursor:
-                cursor.execute(
-                    self.INSERT_SQL + " ON CONFLICT (name) DO NOTHING",
-                    (
-                        blood_center["name"],
-                        blood_center["city"],
-                        blood_center["state"],
-                        blood_center["address"],
-                    ),
-                )
-                cursor.execute(self.FIND_CENTER_ID_SQL, (blood_center["name"],))
+                cursor.execute(self.FIND_CENTER_ID_SQL, (blood_center_name,))
                 center_row = cursor.fetchone()
 
                 if center_row is None:
-                    raise ValueError(f"Blood center not found: {blood_center['name']}")
+                    raise ValueError(f"Blood center not found: {blood_center_name}")
 
                 cursor.execute(
                     self.FIND_STOCK_SQL,
