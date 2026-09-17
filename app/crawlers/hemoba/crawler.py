@@ -1,10 +1,10 @@
-from pathlib import                    Path
+from pathlib import Path
 
-from jinja2 import                     Template
+from jinja2 import Template
 
-from app.crawlers.base import          BaseCrawler
+from app.crawlers.base import BaseCrawler
 from app.crawlers.hemoba.parser import Parser
-from app.services.whatsapp import      Whatsapp
+from app.services.whatsapp import Whatsapp
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 TEMPLATE_PATH = ROOT_DIR / "templates" / "alert.jinja2"
