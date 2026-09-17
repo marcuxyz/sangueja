@@ -16,7 +16,7 @@ class BaseCrawler(ABC):
     def execute(self):
         raw_html = self.fetch()
         self.parsed_data = self.parse(raw_html)
-        self.save_blood_data(self.parsed_data)  # save
+        self.save_blood_data(self.parsed_data)
 
         return self.parsed_data
 

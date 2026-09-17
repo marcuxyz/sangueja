@@ -72,6 +72,17 @@ def test_return_critical_blood_types(download_html, hemoba_html):
     ]
 
 
+@patch("app.crawlers.base.HttpClient.download_html")
+def test_valid_message_data(download_html, hemoba_html):
+    download_html.return_value.text = hemoba_html
+    crawler = HemobaCrawler()
+
+    crawler.execute()
+    message_notification = crawler.message_data(crawler.parsed_data)
+
+    assert "🩸 Tipo sanguíneo: A+\n  🟡 Status: Alerta\n\n" in message_notification
+
+
 def test_crawler_uses_source_url_from_environment():
     crawler = HemobaCrawler()
 

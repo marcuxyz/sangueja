@@ -24,24 +24,28 @@ class HemobaCrawler(BaseCrawler):
         return response.text
 
     def parse(self, raw_html: str):
-        return self._parser.parse(raw_html)
+        data_parsed = self._parser.parse(raw_html)
+        return data_parsed | {"name": self.blood_center_name}
 
     def send_alert(self):
         whatsapp_service = Whatsapp()
-        alert_template = TEMPLATE_PATH.read_text(encoding="utf-8")
-        critical_blood_types = self.filter_warning_blood_types()
-        rendered_alert = Template(alert_template).render(
+        notification_message = self.message_data(self.parsed_data)
+
+        whatsapp_service.send_notification(message=notification_message)
+
+    def message_data(self, data: dict):
+        template = TEMPLATE_PATH.read_text(encoding="utf-8")
+
+        return Template(template).render(
             {
-                "blood_center_name": self.parsed_data["name"],
-                "blood_types": critical_blood_types,
-                "collected_at": self.parsed_data["collected_at"],
+                "blood_center_name": data["name"],
+                "collected_at": data["collected_at"],
+                "blood_types": self.filter_warning_blood_types(),
             }
         )
 
-        whatsapp_service.send_notification(message=rendered_alert)
-
     def filter_warning_blood_types(self):
-        return filter(self.is_critical_blood_type, self.parsed_data["bloods"])
+        return filter(self.filter_blood_types, self.parsed_data["bloods"])
 
-    def is_critical_blood_type(self, blood_type):
+    def filter_blood_types(self, blood_type):
         return blood_type["status"].lower() in ["crítico", "alerta"]
