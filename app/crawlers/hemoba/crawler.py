@@ -24,8 +24,10 @@ class HemobaCrawler(BaseCrawler):
         return response.text
 
     def parse(self, raw_html: str):
-        data_parsed = self._parser.parse(raw_html)
-        return data_parsed | {"name": self.blood_center_name}
+        data = self._parser.parse(raw_html)
+        return {
+            "name": self.blood_center_name,
+        } | data
 
     def send_alert(self):
         whatsapp_service = Whatsapp()

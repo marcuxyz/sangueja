@@ -38,7 +38,6 @@ def test_return_data_of_database(
     crawler = HemobaCrawler()
     first_result = crawler.execute()
     second_result = crawler.execute()
-    crawler.send_alert()
 
     with conn.cursor() as cur:
         cur.execute("SELECT name FROM blood_centers;")
@@ -55,13 +54,15 @@ def test_return_data_of_database(
     assert second_result == first_result
 
 
+@patch.object(HemobaCrawler, "send_alert")
 @patch("app.crawlers.base.HttpClient.download_html")
-def test_return_critical_blood_types(download_html, hemoba_html):
+def test_return_critical_blood_types(download_html, mock_send_alert, hemoba_html):
     download_html.return_value.text = hemoba_html
     crawler = HemobaCrawler()
     crawler.execute()
     warning_blood_types = list(crawler.filter_warning_blood_types())
 
+    mock_send_alert.assert_called_once_with()
     assert warning_blood_types == [
         {"name": "A+", "status": "Alerta"},
         {"name": "A-", "status": "Alerta"},
@@ -72,14 +73,16 @@ def test_return_critical_blood_types(download_html, hemoba_html):
     ]
 
 
+@patch.object(HemobaCrawler, "send_alert")
 @patch("app.crawlers.base.HttpClient.download_html")
-def test_valid_message_data(download_html, hemoba_html):
+def test_valid_message_data(download_html, mock_send_alert, hemoba_html):
     download_html.return_value.text = hemoba_html
     crawler = HemobaCrawler()
 
     crawler.execute()
     message_notification = crawler.message_data(crawler.parsed_data)
 
+    mock_send_alert.assert_called_once_with()
     assert "🩸 Tipo sanguíneo: A+\n  🟡 Status: Alerta\n\n" in message_notification
 
 
