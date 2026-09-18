@@ -1,21 +1,22 @@
 from unittest.mock import patch
 
-from app.crawlers.base import Base
-from app.crawlers.hemoba.crawler import Crawler
+from app.crawlers.base import BaseCrawler
+from app.crawlers.hemoba.crawler import HemobaCrawler
 from config.db.connection import Connection
 from config.db.transactions import Transaction
+from app.http.client import HttpClient
 
 
-@patch.object(Base, "perform", return_value={"name": "Hemoba"})
-def test_base_perform_is_called_once_times(mock_perform):
-    crawler = Crawler()
-    crawler.perform()
+@patch.object(BaseCrawler, "execute", return_value={"name": "Hemoba"})
+def test_base_execute_is_called_once_times(mock_execute):
+    crawler = HemobaCrawler()
+    crawler.execute()
 
     assert crawler is not None
-    mock_perform.assert_called_once()
+    mock_execute.assert_called_once()
 
 
-@patch.object(Crawler, "send_alert")
+@patch.object(HemobaCrawler, "send_alert")
 @patch("app.crawlers.base.HttpClient.download_html")
 def test_return_data_of_database(
     download_html, mock_send_alert, hemoba_html, monkeypatch
@@ -26,13 +27,21 @@ def test_return_data_of_database(
     monkeypatch.setenv("WHATSAPP_TOKEN", "9A8897CGS7")
     monkeypatch.setenv("WHATSAPP_NUMBER", "719899999999")
 
-    crawler = Crawler()
-    first_result = crawler.perform()
-    second_result = crawler.perform()
+    with conn.cursor() as cursor:
+        cursor.execute(
+            "INSERT INTO blood_centers(name) VALUES (%s)"
+            + " ON CONFLICT (name) DO NOTHING",
+            ("Hemoba",),
+        )
+        conn.commit()
+
+    crawler = HemobaCrawler()
+    first_result = crawler.execute()
+    second_result = crawler.execute()
     crawler.send_alert()
 
     with conn.cursor() as cur:
-        cur.execute("SELECT name, city, state, address FROM blood_centers;")
+        cur.execute("SELECT name FROM blood_centers;")
         blood_center = cur.fetchone()
         cur.execute("SELECT COUNT(*) FROM blood_center_stocks;")
         blood_center_stocks = cur.fetchone()[0]
@@ -49,10 +58,8 @@ def test_return_data_of_database(
 @patch("app.crawlers.base.HttpClient.download_html")
 def test_return_critical_blood_types(download_html, hemoba_html):
     download_html.return_value.text = hemoba_html
-    crawler = Crawler()
-
-    crawler.perform()
-
+    crawler = HemobaCrawler()
+    crawler.execute()
     warning_blood_types = list(crawler.filter_warning_blood_types())
 
     assert warning_blood_types == [
@@ -65,26 +72,24 @@ def test_return_critical_blood_types(download_html, hemoba_html):
     ]
 
 
-def test_crawler_uses_source_url_from_environment(monkeypatch):
-    monkeypatch.setenv("HEMOBA_SOURCE_URL", "https://hemoba.example/source")
+@patch("app.crawlers.base.HttpClient.download_html")
+def test_valid_message_data(download_html, hemoba_html):
+    download_html.return_value.text = hemoba_html
+    crawler = HemobaCrawler()
 
-    crawler = Crawler()
+    crawler.execute()
+    message_notification = crawler.message_data(crawler.parsed_data)
 
-    assert crawler.source_url() == "https://hemoba.example/source"
+    assert "🩸 Tipo sanguíneo: A+\n  🟡 Status: Alerta\n\n" in message_notification
+
+
+def test_crawler_uses_source_url_from_environment():
+    crawler = HemobaCrawler()
+
+    assert crawler.URL == "http://www.hemoba.ba.gov.br/"
 
 
 def test_crawler_parser_is_hemoba_parser():
-    crawler = Crawler()
+    crawler = HemobaCrawler()
 
-    assert crawler.create_parser().__class__.__name__ == "Parser"
-
-
-def test_crawler_identifies_blood_center():
-    crawler = Crawler()
-
-    assert crawler.blood_center_data() == {
-        "name": "Hemoba",
-        "city": "Salvador",
-        "state": "BA",
-        "address": "Ladeira do Hospital Geral, s/n, Brotas - Cep: 40.286-240 - Complexo HGE, Hemoba e Cican",
-    }
+    assert crawler._parser.__class__.__name__ == "Parser"

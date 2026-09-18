@@ -1,9 +1,8 @@
-import os
 from pathlib import Path
 
 from jinja2 import Template
 
-from app.crawlers.base import Base
+from app.crawlers.base import BaseCrawler
 from app.crawlers.hemoba.parser import Parser
 from app.services.whatsapp import Whatsapp
 
@@ -11,40 +10,42 @@ ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 TEMPLATE_PATH = ROOT_DIR / "templates" / "alert.jinja2"
 
 
-class Crawler(Base):
+class HemobaCrawler(BaseCrawler):
+    URL = "http://www.hemoba.ba.gov.br/"
+
     def __init__(self):
         super().__init__()
 
-    def create_parser(self):
-        return Parser()
+        self.blood_center_name = "Hemoba"
+        self._parser = Parser()
 
-    def source_url(self):
-        return os.getenv("HEMOBA_SOURCE_URL", "https://www.ba.gov.br/hemoba/")
+    def fetch(self) -> str:
+        response = self.client.download_html()
+        return response.text
+
+    def parse(self, raw_html: str):
+        data_parsed = self._parser.parse(raw_html)
+        return data_parsed | {"name": self.blood_center_name}
 
     def send_alert(self):
         whatsapp_service = Whatsapp()
-        alert_template = TEMPLATE_PATH.read_text(encoding="utf-8")
-        critical_blood_types = self.filter_warning_blood_types()
-        rendered_alert = Template(alert_template).render(
+        notification_message = self.message_data(self.parsed_data)
+
+        whatsapp_service.send_notification(message=notification_message)
+
+    def message_data(self, data: dict):
+        template = TEMPLATE_PATH.read_text(encoding="utf-8")
+
+        return Template(template).render(
             {
-                "blood_center_name": self.combined_data["name"],
-                "blood_types": critical_blood_types,
-                "collected_at": self.combined_data["collected_at"],
+                "blood_center_name": data["name"],
+                "collected_at": data["collected_at"],
+                "blood_types": self.filter_warning_blood_types(),
             }
         )
 
-        whatsapp_service.send_notification(message=rendered_alert)
-
-    def blood_center_data(self):
-        return {
-            "name": "Hemoba",
-            "city": "Salvador",
-            "state": "BA",
-            "address": "Ladeira do Hospital Geral, s/n, Brotas - Cep: 40.286-240 - Complexo HGE, Hemoba e Cican",
-        }
-
     def filter_warning_blood_types(self):
-        return filter(self.is_critical_blood_type, self.combined_data["bloods"])
+        return filter(self.filter_blood_types, self.parsed_data["bloods"])
 
-    def is_critical_blood_type(self, blood_type):
+    def filter_blood_types(self, blood_type):
         return blood_type["status"].lower() in ["crítico", "alerta"]

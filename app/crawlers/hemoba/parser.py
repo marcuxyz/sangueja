@@ -2,10 +2,12 @@ from bs4 import BeautifulSoup
 
 
 class Parser:
-    def parse(self, document: BeautifulSoup):
+    def parse(self, raw_html: str) -> dict:
+        soup = BeautifulSoup(raw_html, "html.parser")
+
         return {
-            "bloods": self.parse_blood_availability(document),
-            "collected_at": self.extract_collection_timestamp(document),
+            "bloods": self.parse_blood_availability(soup),
+            "collected_at": self.extract_collection_timestamp(soup),
         }
 
     def parse_blood_availability(self, document):
