@@ -38,6 +38,7 @@ class HttpClient:
                 headers={
                     "User-Agent": "SangueJa/1.0 (+https://whatsapp.com/channel/0029VbDs7Jv47XeJnANDSG3l)"
                 },
+                follow_redirects=True,
             )
 
             response.raise_for_status()

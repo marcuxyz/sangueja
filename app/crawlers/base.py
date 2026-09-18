@@ -10,7 +10,7 @@ class BaseCrawler(ABC):
         client: HttpClient | None = None,
         blood_center_repository: BloodCenterRepository | None = None,
     ):
-        self.client = client or HttpClient()
+        self.client = client or HttpClient(self.URL)
         self.blood_center_repository = blood_center_repository or BloodCenterRepository()
 
     def execute(self):
