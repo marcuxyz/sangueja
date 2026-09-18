@@ -1,7 +1,7 @@
-from app.crawlers.hemoba.crawler import Crawler
+from app.crawlers.hemoba.crawler import HemobaCrawler
 
 def main():
-    crawl = Crawler()
+    crawl = HemobaCrawler()
     crawl.execute()
 
 if __name__ == "__main__":
