@@ -6,7 +6,10 @@ from app.http.client import HttpClient
 
 class Whatsapp:
     def __init__(self, url: str = None):
-        self.client = HttpClient(os.environ["WHATSAPP_URL"] or url)
+        self.WHATSAPP_URL = os.environ["WHATSAPP_URL"]
+        self.WHATSAPP_TOKEN = os.environ["WHATSAPP_TOKEN"]
+        self.WHATSAPP_NUMBER = os.environ["WHATSAPP_NUMBER"]
+        self.client = HttpClient(self.WHATSAPP_URL or url)
 
     def send_notification(self, message: str) -> bool:
         """Send a text notification through the configured WhatsApp client.
@@ -38,7 +41,7 @@ class Whatsapp:
         return {
             "Accept": "application/json",
             "Content-Type": "application/json",
-            "token": os.environ["WHATSAPP_TOKEN"],
+            "token": self.WHATSAPP_TOKEN,
         }
 
     def payload(self, message: str) -> dict:
@@ -51,6 +54,6 @@ class Whatsapp:
             A dictionary containing the recipient number and message text.
         """
         return {
-            "number": os.environ["WHATSAPP_NUMBER"],
+            "number": self.WHATSAPP_NUMBER,
             "text": message,
         }
