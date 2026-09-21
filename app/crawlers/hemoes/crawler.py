@@ -1,23 +1,24 @@
+import os
 from pathlib import Path
 
 from jinja2 import Template
 
 from app.crawlers.base import BaseCrawler
-from app.crawlers.hemoba.parser import Parser
+from app.crawlers.hemoes.parser import HemoesParser
 from app.services.whatsapp import Whatsapp
 
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 TEMPLATE_PATH = ROOT_DIR / "templates" / "alert.jinja2"
 
 
-class HemobaCrawler(BaseCrawler):
-    URL = "http://www.hemoba.ba.gov.br/"
+class HemoesCrawler(BaseCrawler):
+    URL = os.getenv("HEMOES_URL", "https://hemoes.es.gov.br/")
 
     def __init__(self):
         super().__init__()
 
-        self.blood_center_name = "Hemoba"
-        self._parser = Parser()
+        self.blood_center_name = "Hemoes"
+        self._parser = HemoesParser()
 
     def fetch(self) -> str:
         response = self.client.download_html()

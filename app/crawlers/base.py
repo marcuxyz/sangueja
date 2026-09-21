@@ -28,7 +28,7 @@ class BaseCrawler(ABC):
         return self.blood_center_repository.save_snapshot(
             self.blood_center_name,
             parsed_document["collected_at"],
-            parsed_document["bloods"],
+            parsed_document["blood_types"],
         )
 
     @abstractmethod

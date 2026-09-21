@@ -6,7 +6,7 @@ class Parser:
         soup = BeautifulSoup(raw_html, "html.parser")
 
         return {
-            "bloods": self.parse_blood_availability(soup),
+            "blood_types": self.parse_blood_availability(soup),
             "collected_at": self.extract_collection_timestamp(soup),
         }
 
