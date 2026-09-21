@@ -1,5 +1,4 @@
-
-🔴 {{ blood_center_name }} — Estoque em atenção
+🔴 *{{ blood_center_name }}* — Estoque em atenção
 
 {% for blood_type in blood_types %}
   🩸 Tipo sanguíneo: {{ blood_type["name"] }}
@@ -7,6 +6,6 @@
 {% endfor %}
 
 🏥 Hemocentro:  {{ blood_center_name }}
-📍 Endereço: https://www.ba.gov.br/hemoba/onde-doar
+📍 Endereço: {{ blood_center_address }}
 
 ❤️ Se você puder doar sangue, sua doação pode ajudar a salvar vidas.

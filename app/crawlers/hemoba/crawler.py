@@ -17,6 +17,8 @@ class HemobaCrawler(BaseCrawler):
         super().__init__()
 
         self.blood_center_name = "Hemoba"
+        self.blood_center_address = "https://www.ba.gov.br/hemoba/onde-doar"
+
         self._parser = Parser()
 
     def fetch(self) -> str:
@@ -27,6 +29,7 @@ class HemobaCrawler(BaseCrawler):
         data = self._parser.parse(raw_html)
         return {
             "name": self.blood_center_name,
+            "address": self.blood_center_address,
         } | data
 
     def send_alert(self):
@@ -42,6 +45,7 @@ class HemobaCrawler(BaseCrawler):
             {
                 "blood_center_name": data["name"],
                 "collected_at": data["collected_at"],
+                "blood_center_address": data["address"],
                 "blood_types": self.filter_warning_blood_types(),
             }
         )

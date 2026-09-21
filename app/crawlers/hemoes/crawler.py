@@ -18,6 +18,7 @@ class HemoesCrawler(BaseCrawler):
         super().__init__()
 
         self.blood_center_name = "Hemoes"
+        self.blood_center_address = "https://hemoes.es.gov.br/enderecos-dos-hemocentros"
         self._parser = HemoesParser()
 
     def fetch(self) -> str:
@@ -28,6 +29,7 @@ class HemoesCrawler(BaseCrawler):
         data = self._parser.parse(raw_html)
         return {
             "name": self.blood_center_name,
+            "address": self.blood_center_address,
         } | data
 
     def send_alert(self):
@@ -38,11 +40,11 @@ class HemoesCrawler(BaseCrawler):
 
     def message_data(self, data: dict):
         template = TEMPLATE_PATH.read_text(encoding="utf-8")
-
         return Template(template).render(
             {
                 "blood_center_name": data["name"],
                 "collected_at": data["collected_at"],
+                "blood_center_address": data["address"],
                 "blood_types": self.filter_warning_blood_types(),
             }
         )
