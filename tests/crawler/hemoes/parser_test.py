@@ -22,6 +22,15 @@ def test_extract_records_without_metadata(hemoes_fixture):
     ]
 
 
+def test_collected_at_blood_stock(hemoes_fixture):
+    parser = HemoesParser()
+    stock_blood_data = json.loads(hemoes_fixture)
+    excracted_records = parser._extract_records(stock_blood_data)
+    collected_data = parser._collected_at(excracted_records)
+
+    assert collected_data == "05/08/2026"
+
+
 def test_format_blood_stock(hemoes_fixture):
     parser = HemoesParser()
     stock_blood_data = json.loads(hemoes_fixture)
