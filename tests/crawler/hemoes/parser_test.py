@@ -3,6 +3,25 @@ import json
 from app.crawlers.hemoes.parser import HemoesParser
 
 
+def test_parse(hemoes_fixture):
+    hemoes_parser = HemoesParser()
+    parsed_data = hemoes_parser.parse(hemoes_fixture)
+
+    assert parsed_data == {
+        "blood_types": [
+            {"name": "A-", "status": "Crítico"},
+            {"name": "A+", "status": "Estável"},
+            {"name": "B-", "status": "Crítico"},
+            {"name": "B+", "status": "Crítico"},
+            {"name": "AB-", "status": "Alerta"},
+            {"name": "AB+", "status": "Alerta"},
+            {"name": "O-", "status": "Alerta"},
+            {"name": "O+", "status": "Estável"},
+        ],
+        "collected_at": "05/08/2026",
+    }
+
+
 def test_extract_records_without_metadata(hemoes_fixture):
     parser = HemoesParser()
     stock_data = json.loads(hemoes_fixture)
