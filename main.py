@@ -20,7 +20,7 @@ def main():
     args = parser.parse_args()
 
     if args.bloodcenter:
-        crawler = CRAWLERS[args.bloocenter]()
+        crawler = CRAWLERS[args.bloodcenter]()
         crawler.execute()
         return
 
