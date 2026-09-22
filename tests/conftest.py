@@ -38,3 +38,8 @@ def before():
 @pytest.fixture
 def hemoba_html():
     return load_fixture("hemoba/example1.html")
+
+
+@pytest.fixture
+def hemoes_fixture():
+    return load_fixture("hemoes/example.json")
