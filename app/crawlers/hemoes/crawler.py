@@ -12,7 +12,10 @@ TEMPLATE_PATH = ROOT_DIR / "templates" / "alert.jinja2"
 
 
 class HemoesCrawler(BaseCrawler):
-    URL = os.getenv("HEMOES_URL", "https://hemoes.es.gov.br/")
+    URL = os.getenv(
+        "HEMOES_URL",
+        "https://dados.es.gov.br/api/action/datastore_search?resource_id=d73f9335-f454-4d1a-bfba-51ed2dac9cb6&limit=1&sort=_id+desc",
+    )
 
     def __init__(self):
         super().__init__()
