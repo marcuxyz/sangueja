@@ -48,4 +48,4 @@ jobs:
           WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
           WHATSAPP_NUMBER: ${{ secrets.WHATSAPP_NUMBER }}
 
-        run: uv run python main.py --blood-center ${{ matrix.bloodcenter }}
+        run: uv run python main.py --bloodcenter ${{ matrix.bloodcenter }}
