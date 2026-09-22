@@ -1,9 +1,10 @@
-name: Cron Daily
+name:  Crawler run
 
 on:
   schedule:
     - cron: '0 12 * * 1-5'
       timezone: 'America/Sao_Paulo'
+
   workflow_dispatch:
 
 jobs:
@@ -11,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         bloodcenter:
           - hemoba
@@ -33,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen
 
-      - name: Run Crawler
+      - name: Run crawler
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           APP_ENV: ${{ secrets.APP_ENV }}
@@ -46,4 +48,4 @@ jobs:
           WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
           WHATSAPP_NUMBER: ${{ secrets.WHATSAPP_NUMBER }}
 
-        run: python main.py --bloodcenter ${{ matrix.bloodcenter }}
+        run: uv run python main.py --blood-center ${{ matrix.bloodcenter }}
