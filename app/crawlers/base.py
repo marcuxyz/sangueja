@@ -14,8 +14,8 @@ class BaseCrawler(ABC):
         self.blood_center_repository = blood_center_repository or BloodCenterRepository()
 
     def execute(self):
-        raw_html = self.fetch()
-        self.parsed_data = self.parse(raw_html)
+        raw_data = self.fetch()
+        self.parsed_data = self.parse(raw_data)
         existing_snapshot = self.save_blood_data(self.parsed_data)
 
         if existing_snapshot:
