@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from typing import Any, Mapping
 
 from config.db.connection import Connection
@@ -39,6 +40,7 @@ class BloodCenterRepository:
         collected_at: str,
         bloods: list[Mapping[str, str]],
     ) -> bool:
+        collected_date = self._normalize_collected_at(collected_at)
         connection = self.query.conn
         try:
             with connection.cursor() as cursor:
@@ -50,7 +52,7 @@ class BloodCenterRepository:
 
                 cursor.execute(
                     self.FIND_STOCK_SQL,
-                    (center_row[0], collected_at),
+                    (center_row[0], collected_date),
                 )
                 if cursor.fetchone() is not None:
                     connection.commit()
@@ -58,7 +60,7 @@ class BloodCenterRepository:
 
                 cursor.execute(
                     self.INSERT_STOCK_SQL,
-                    (center_row[0], collected_at),
+                    (center_row[0], collected_date),
                 )
                 stock_row = cursor.fetchone()
 
@@ -82,3 +84,17 @@ class BloodCenterRepository:
         except Exception:
             connection.rollback()
             raise
+
+    @staticmethod
+    def _normalize_collected_at(collected_at: str) -> date:
+        for parser in (
+            datetime.fromisoformat,
+            lambda value: datetime.strptime(value, "%d/%m/%Y"),
+            lambda value: datetime.strptime(value, "%d/%m/%y"),
+        ):
+            try:
+                return parser(collected_at).date()
+            except ValueError:
+                continue
+
+        raise ValueError(f"Invalid collection date: {collected_at}")

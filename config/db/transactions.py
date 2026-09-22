@@ -1,5 +1,6 @@
 import psycopg
 
+
 class Transaction:
     def __init__(self, connection: psycopg.Connection):
         """
@@ -34,7 +35,7 @@ class Transaction:
         CREATE TABLE IF NOT EXISTS blood_center_stocks (
             id SERIAL PRIMARY KEY,
             blood_center_id INTEGER NOT NULL,
-            collected_at TIMESTAMP NOT NULL,
+            collected_at DATE NOT NULL,
             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             CONSTRAINT fk_blood_center
